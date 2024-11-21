@@ -14,7 +14,7 @@ conn = mysql.connector.connect(
                 )
 
 # Animated print function
-def anim_print(text, delay=0.02):
+def anim_print(text, delay=0.0):
     for char in text:
         print(char, end="", flush=True)
         time.sleep(delay)

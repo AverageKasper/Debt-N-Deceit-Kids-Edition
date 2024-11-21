@@ -4,11 +4,24 @@
 from utilities import conn
 
 def initial_setup():
+    with conn.cursor() as cursor:
+        cursor.execute("""
+            CREATE TABLE IF NOT EXISTS player (
+            id SERIAL PRIMARY KEY,
+            player_name VARCHAR(100) NOT NULL,
+            money INT DEFAULT 0,
+            carbon INT DEFAULT 0,
+            inventory INT DEFAULT 0,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            );
+        """)
+        conn.commit()
 
-    cursor = conn.cursor()
-    sql = """IF OBJECT_ID('goal', 'U') IS NOT NULL DROP TABLE goal;
-             IF OBJECT_ID('goal_reached', 'U') IS NOT NULL DROP TABLE goal_reached;
-             ALTER TABLE game DROP COLUMN co2_consumed, co2_budget;"""
-    cursor.execute(sql)
-
+def create_player(player_name, money=0.00, carbon=0, inventory=0):
+    with conn.cursor() as cursor:
+        cursor.execute("""
+            INSERT INTO player (player_name, money, carbon, inventory) VALUES (%s, %s, %s, %s)
+        """, (player_name, money, carbon, inventory))
+        conn.commit()
 initial_setup()
+create_player('Kasper', 10000, 5000)
