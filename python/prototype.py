@@ -38,7 +38,7 @@ class Player:
         self.cp += amount
 
     def display_status(self):
-        print(f"""
+        anim_print(f"""
 You are at {self.airport_name}, {self.airport_country}.
 You have {self.cp}CP and {self.balance}€ in the bank.
 """)
