@@ -56,11 +56,11 @@ def update_carbon(player_name, carbon):
         """, (carbon, player_name))
         conn.commit()
 
-def fly():
+def fly(airport_type):
     with conn.cursor() as cursor:
         cursor.execute("""
-            SELECT name,  FROM airport
-        """)
+            SELECT name, iso_country, type FROM airport where contintent = 'EU' and type = '%s' ORDER BY RAND() LIMIT 1
+        """, (airport_type,))
         location = cursor.fetchall()
         return location[0][0]
 initial_setup()
