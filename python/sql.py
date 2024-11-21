@@ -34,4 +34,33 @@ def get_money(player_name):
         money = cursor.fetchall()
         return money[0][0]
 
+def update_money(player_name, money):
+    with conn.cursor() as cursor:
+        cursor.execute("""
+            UPDATE player SET money = %s WHERE player_name = %s
+        """, (money, player_name))
+        conn.commit()
+
+def get_carbon(player_name):
+    with conn.cursor() as cursor:
+        cursor.execute("""
+            SELECT carbon FROM player WHERE player_name = %s
+        """, (player_name,))
+        carbon = cursor.fetchall()
+        return carbon[0][0]
+
+def update_carbon(player_name, carbon):
+    with conn.cursor() as cursor:
+        cursor.execute("""
+            UPDATE player SET carbon = %s WHERE player_name = %s
+        """, (carbon, player_name))
+        conn.commit()
+
+def fly():
+    with conn.cursor() as cursor:
+        cursor.execute("""
+            SELECT name,  FROM airport
+        """)
+        location = cursor.fetchall()
+        return location[0][0]
 initial_setup()

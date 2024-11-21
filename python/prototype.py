@@ -18,32 +18,6 @@ from utilities import loading
 from utilities import conn
 from smoking import smoking_action
 
-class Player:
-    def __init__(self, balance, cp, airport_name, airport_country, airport_type):
-        self.balance = balance
-        self.cp = cp
-        self.airport_name = airport_name
-        self.airport_country = airport_country
-        self.airport_type = airport_type
-
-    def update_location(self, airport_name, airport_country, airport_type):
-        self.airport_name = airport_name
-        self.airport_country = airport_country
-        self.airport_type = airport_type
-
-    def update_balance(self, amount):
-        self.balance += amount
-
-    def update_cp(self, amount):
-        self.cp += amount
-
-    def display_status(self):
-        anim_print(f"""
-You are at {self.airport_name}, {self.airport_country}.
-You have {self.cp}CP and {self.balance}€ in the bank.
-""")
-
-
 # Variables
 ## Difficulty changes
 easy_balance = 2500
