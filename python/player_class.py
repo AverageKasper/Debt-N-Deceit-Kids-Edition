@@ -14,6 +14,7 @@ class Player:
         self.airport_type = airport_type
         create_player(self.name, self.balance, self.carbon, self.shark)
 
+
     def update_location(self, airport_name, airport_country, airport_type):
         self.airport_name = airport_name
         self.airport_country = airport_country
@@ -39,3 +40,8 @@ class Player:
 You are at {self.airport_name}, {self.airport_country}.
 You have {self.carbon} Carbon and {self.balance}€ in the bank.
 """)
+        
+def create_player_object(player_name, money, carbon, shark, airport_name, airport_country, airport_type):
+    global player
+    player = Player(player_name, money, carbon, shark, airport_name, airport_country, airport_type)
+    return player

@@ -13,8 +13,7 @@ def initial_setup():
             money INT DEFAULT 0,
             carbon INT DEFAULT 0,
             shark INT DEFAULT 0,
-            inventory INT DEFAULT 0,
-            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            inventory INT DEFAULT 0
             );
         """)
         conn.commit()
@@ -25,6 +24,17 @@ def create_player(player_name, money, carbon, shark):
             INSERT INTO player (player_name, money, carbon, shark) VALUES (%s, %s, %s, %s)
         """, (player_name, money, carbon, shark))
         conn.commit()
+        
+def check_name(player_name):
+    with conn.cursor() as cursor:
+        cursor.execute("""
+            SELECT player_name FROM player WHERE player_name = %s
+        """, (player_name,))
+        name = cursor.fetchall()
+        if cursor.rowcount > 0:
+            return True
+        else:
+            return False
 
 def get_money(player_name):
     with conn.cursor() as cursor:
