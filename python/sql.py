@@ -56,11 +56,43 @@ def update_carbon(player_name, carbon):
         """, (carbon, player_name))
         conn.commit()
 
+def get_shark(player_name):
+    with conn.cursor() as cursor:
+        cursor.execute("""
+            SELECT shark FROM player WHERE player_name = %s
+        """, (player_name,))
+        shark = cursor.fetchall()
+        return shark[0][0]
+    
+def update_shark(player_name, shark):
+    with conn.cursor() as cursor:
+        cursor.execute("""
+            UPDATE player SET shark = %s WHERE player_name = %s
+        """, (shark, player_name))
+        conn.commit()
+
+def get_inventory(player_name):
+    with conn.cursor() as cursor:
+        cursor.execute("""
+            SELECT inventory FROM player WHERE player_name = %s
+        """, (player_name,))
+        inventory = cursor.fetchall()
+        return inventory[0][0]
+
+def update_inventory(player_name, inventory):
+    with conn.cursor() as cursor:
+        cursor.execute("""
+            UPDATE player SET inventory = %s WHERE player_name = %s
+        """, (inventory, player_name))
+        conn.commit()
+
 def fly(airport_type):
     with conn.cursor() as cursor:
         cursor.execute("""
-            SELECT name, iso_country, type FROM airport where contintent = 'EU' and type = '%s' ORDER BY RAND() LIMIT 1
+            SELECT name, iso_country, type, latitude_deg, longitude_deg FROM airport where continent = 'EU' and type = %s ORDER BY RAND() LIMIT 1
         """, (airport_type,))
         location = cursor.fetchall()
-        return location[0][0]
+        return location[0]
 initial_setup()
+
+

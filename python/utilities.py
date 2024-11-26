@@ -37,14 +37,15 @@ def clear_window():
     os.system('cls' if os.name=='nt' else 'clear')
 
 # Checks if value can be changed to int, used when a number is needed for an answer
-def int_check(player_input):
-    while player_input is not int:
+def int_check(player_input, max_value):
+    while True:
         try:
             player_input = int(player_input)
-        except:
-           player_input =  input("Invalid option, try again: ")
-        else:
-           player_input = int(player_input)
-           break 
+            if 1 <= player_input <= max_value:
+                break
+            else:
+                raise ValueError
+        except ValueError:
+            player_input = input(f"Invalid option, enter a number between 1 and {max_value}: ")
     return player_input
 

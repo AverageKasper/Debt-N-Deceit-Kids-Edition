@@ -1,4 +1,5 @@
-from sql import create_player, update_money
+from sql import (create_player, update_money, update_inventory,
+                 update_carbon, update_shark)
 from utilities import anim_print
 
 
@@ -24,8 +25,16 @@ class Player:
 
     def update_carbon(self, amount):
         self.carbon += amount
+        update_carbon(self.name, self.carbon)
 
-    def display_status(self):
+    def update_shark(self, amount):
+        self.shark += amount
+        update_shark(self.name, self.shark)
+    
+    def update_inventory(self, amount):
+        self.inventory += amount
+        update_inventory(self.name, self.inventory)
+    def display_status(self): # This is pointless will be removed later
         anim_print(f"""
 You are at {self.airport_name}, {self.airport_country}.
 You have {self.carbon} Carbon and {self.balance}€ in the bank.
