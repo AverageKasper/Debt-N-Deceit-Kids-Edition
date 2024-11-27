@@ -1,3 +1,4 @@
+from python.smoking import smoking_action
 from sql import fly
 from utilities import int_check
 
@@ -5,6 +6,8 @@ from utilities import int_check
 from dumpster import dumpster_dive
 from pickpocket import pickpocket
 from player_class import player
+from gambling import casino
+from smoking import smoking_action
 
 airport_cost = {"small": 100, "medium": 200, "large": 500}
 
@@ -73,11 +76,48 @@ def small_airport_task():
 
 # Medium airport tasks are selected here
 def medium_airport_task():
-    pass
+    task_done_count = 0
+
+    while task_done_count < 3:
+        print(f"You can do {3 - task_done_count} more tasks, the shark is {player.shark} steps behind you.")
+        print("You are at a medium airport, you can do the following tasks: ")
+        print("1. Trivia")
+        print("2. Go to the next airport")
+
+        task_choice = input("Choose a task: ")
+        if task_choice == "1":
+            pass
+        elif task_choice == "2":
+            return
+        else:
+            print("Invalid choice")
+            continue
+        task_done_count += 1
+        player.update_shark(-1)
 
 # Large airport tasks are selected here
 def large_airport_task():
-    pass
+    task_done_count = 0
+
+    while task_done_count < 3:
+        print(f"You can do {3 - task_done_count} more tasks, the shark is {player.shark} steps behind you.")
+        print("You are at a small airport, you can do the following tasks: ")
+        print("1. Gamble")
+        print("2. Smoking break")
+        print("3. Go to the next airport")
+
+        task_choice = input("Choose a task: ")
+        if task_choice == "1":
+            casino()
+        elif task_choice == "2":
+            smoking_action()
+        elif task_choice == "3":
+            return
+        else:
+            print("Invalid choice")
+            continue
+        task_done_count += 1
+        player.update_shark(-1)
 
 
 
