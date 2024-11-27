@@ -4,7 +4,7 @@ from flask_cors import CORS
 import json
 app = Flask(__name__)
 CORS(app)
-@app.route('/pickpocket_victims')
+@app.route('/pickpocket')
 
 def pickpocket_victims():
     try:
@@ -50,6 +50,33 @@ def pickpocket_victims():
                 "error": str(e)}
     jsonvast = json.dumps(result)
     return Response(response=jsonvast, status=status_code, mimetype="application/json")
+
+
+
+@app.route('/pickpocket/<name>/<difficulty>')
+def calculate_pickpocket(name, difficulty):
+    result = ""
+    difficulties= {"★": 10,
+                   "★★": 30,
+                   "★★★": 50,
+                   "★★★★": 70,
+                   "★★★★★": 90}
+    for key, value in difficulties.items():
+        if difficulty == key:
+            r.randint(1, 100)
+            chance = value
+            if chance >= r.randint(1, 100):
+                result = f"Success! You successfully pickpocketed {name} and earned {r.randint(10,50) * chance}€."
+            else:
+                result = f"Failure! You got caught trying to pickpocket {name}. You got fined for {300}€."
+    response = make_response(result, 200)
+    return result
+
+    # List
+
+
+
+
 
 def pickpocket():
     penalty = 300

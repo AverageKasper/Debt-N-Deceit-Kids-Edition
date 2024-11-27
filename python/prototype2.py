@@ -51,7 +51,7 @@ def start_game():
     
     create_player_object(player_name, money, carbon, shark, "Helsinki-Vantaa", "Finland", "large_airport")
     game_loop()
-    return 'Game started!'
+    #end()
 
 
 # Main game loop
