@@ -240,3 +240,5 @@ def casino(money:int):
             anim_print(f"Your total balance is {money} euros\n")
             return money
     return money
+
+#monke69
