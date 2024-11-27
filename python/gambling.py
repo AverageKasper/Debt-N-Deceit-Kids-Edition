@@ -169,7 +169,7 @@ def casino(money:int):
             if game_select == gameoptions[2]:  # Dice game
                 anim_print(f"Your total balance is {money} euros\n")
                 bet = input(anim_print("How much do you want to bet: "))
-                bet = int_check(bet)
+                bet = int_check(bet, )
                 while bet > money:
                     bet = input(anim_print("Broke ass, bet less: "))
                     bet = int_check(bet)

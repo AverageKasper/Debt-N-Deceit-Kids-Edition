@@ -6,7 +6,7 @@ from utilities import int_check
 from dumpster import dumpster_dive
 
 from player_class import player
-from gambling import casino
+from gambling2 import casino
 from smoking import smoking_action
 
 
@@ -14,7 +14,7 @@ airport_cost = {"small": 100, "medium": 200, "large": 500}
 
 # Function for selecting the next airport
 def airport_selector():
-    print(f"You are at {player.airport_name}, you can fly to the following airports: ")
+    print(f"You are at {player.airport_name}, you can fly to the following airports: {player.balance, player.carbon}")
     next_small_airport = fly("small_airport")
     next_medium_airport = fly("medium_airport")
     next_large_airport = fly("large_airport")
@@ -109,9 +109,9 @@ def large_airport_task():
 
         task_choice = input("Choose a task: ")
         if task_choice == "1":
-            casino(player.balance)
+            casino()
         elif task_choice == "2":
-            smoking_action(player.balance)
+            smoking_action(352)
         elif task_choice == "3":
             return
         else:

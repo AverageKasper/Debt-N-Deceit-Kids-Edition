@@ -1,7 +1,7 @@
 import random as r
 import time
 from utilities import anim_print, loading, clear_window, int_check
-from python.player_class import player
+from player_class import player
 
 
 def horse_race(player):
@@ -22,10 +22,10 @@ def horse_race(player):
 
     anim_print(f"Your total balance is {player.balance} euros\n")
     bet = input(anim_print("How much do you want to bet: "))
-    bet = int_check(bet)
+    bet = int_check(bet, player.balance)
     while bet > player.balance:
         bet = input(anim_print("Broke ass, bet less: "))
-        bet = int_check(bet)
+        bet = int_check(bet, player.balance)
 
     anim_print(f"You placed {bet} euros on {bet_horse}.\n")
     horse_speeds = {horse: r.randint(10, 20) for horse in horses}
@@ -80,10 +80,10 @@ def blackjack(player):
     anim_print("Welcome to Blackjack!")
     anim_print(f"Your total balance is {player.balance} euros\n")
     bet = input(anim_print("How much do you want to bet: "))
-    bet = int_check(bet)
+    bet = int_check(bet, player.balance)
     while bet > player.balance:
         bet = input(anim_print("Broke ass, bet less: "))
-        bet = int_check(bet)
+        bet = int_check(bet, player.balance)
 
     player_hand = [deal_card(), deal_card()]
     dealer_hand = [deal_card(), deal_card()]
@@ -126,10 +126,10 @@ def blackjack(player):
 def snake_eyes():
     anim_print(f"Your total balance is {player.balance} euros\n")
     bet = input(anim_print("How much do you want to bet: "))
-    bet = int_check(bet)
+    bet = int_check(bet, player.balance)
     while bet > player.balance:
         bet = input(anim_print("\nBroke ass, bet less: "))
-        bet = int_check(bet)
+        bet = int_check(bet, player.balance)
     dice_1, dice_2 = r.randint(1, 6), r.randint(1, 6)
     anim_print(f"You rolled: {dice_1} and {dice_2}\n")
     if dice_1 == dice_2 == 1:
@@ -146,10 +146,10 @@ def snake_eyes():
 def dice():
     anim_print(f"Your total balance is {player.balance} euros\n")
     bet = input(anim_print("How much do you want to bet: "))
-    bet = int_check(bet)
+    bet = int_check(bet, player.balance)
     while bet > player.balance:
         bet = input(anim_print("Broke ass, bet less: "))
-        bet = int_check(bet)
+        bet = int_check(bet, player.balance)
     dealer_dice1, dealer_dice2 = r.randint(1, 6), r.randint(1, 6)
     player_dice1, player_dice2 = r.randint(1, 6), r.randint(1, 6)
     dealer_total = dealer_dice1 + dealer_dice2
@@ -169,10 +169,10 @@ def dice():
 def hilo():
     anim_print(f"Your total balance is {player.balance} euros\n")
     bet = input(anim_print("How much do you want to bet: "))
-    bet = int_check(bet)
+    bet = int_check(bet, player.balance)
     while bet > player.balance:
         bet = input(anim_print("\nBroke ass, bet less: "))
-        bet = int_check(bet)
+        bet = int_check(bet, player.balance)
 
     first_card = r.randint(1, 13)
     anim_print(f"First card: {first_card}\n")
@@ -190,7 +190,7 @@ def hilo():
     anim_print(f"Your total balance is {player.balance} euros\n")
 
 
-def casino(player):
+def casino():
     clear_window()
     game_select = ""
     gameoptions = ["SNAKE EYES", "HILO", "DICE", "BLACKJACK", "HORSE RACING", "RETURN"]
@@ -227,8 +227,5 @@ def casino(player):
             break  #Exit the casino loop
 
     clear_window()
-
-
-#monke69
 
 

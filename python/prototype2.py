@@ -1,24 +1,11 @@
 # Basic imports
 import random as r
-
-#Task Scripts
-#from airport_selection import airport_selector
-
-#SQL scripts
-
-
-
-# Remember to change your own credentials in the connector
+from flask import Flask, Response
+from flask_cors import CORS
 
 from player_class import create_player_object
 
 from random_events import random_event
-
-        
-
-
-# Variables
-
 
 def start_game():
     from sql import check_name
@@ -72,6 +59,7 @@ def game_loop():
         # Fly to next airport
         from airport_selection import airport_selector
         airport_selector()
+        
         
         print(f"Back at main script. Game loop: {game_loops}")
         
