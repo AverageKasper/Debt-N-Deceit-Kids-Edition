@@ -29,12 +29,11 @@ const victims = getData('http://127.0.0.1:4000/pickpocket').then(data => {
     button_3.value = data[0].victim_3.difficulty;
 });;
 
-button_1.addEventListener('click', () => {
+button_1.addEventListener('click', async (evt) => {
     const victim = button_1.name;
     const difficulty = button_1.value;
-    const result = getData(`http://127.0.0.1:4000/pickpocket/${victim}/${difficulty}`).then(data => {
-        console.log(data);
-
-    });
-    pickpocket_result.innerHTML = result;
+    const result = await fetch(`http://127.0.0.1:4000/pickpocket/${victim}/${difficulty}`)
+    const result_json = await result.json();
+    console.log(result_json);
+    pickpocket_result.innerText = result_json.message;
 });

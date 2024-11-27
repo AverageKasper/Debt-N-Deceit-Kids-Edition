@@ -49,7 +49,7 @@ def start_game():
 
     # Player object, has a name, money, carbon, shark, inventory, airport_name, airport_country, airport_type as attributes
     
-    create_player_object(player_name, money, carbon, shark, "Helsinki-Vantaa", "Finland", "large_airport")
+    create_player_object(player_name, money, carbon, shark, 0, "Helsinki-Vantaa", "Finland", "large_airport")
     game_loop()
     #end()
 

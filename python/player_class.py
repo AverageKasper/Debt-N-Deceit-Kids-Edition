@@ -38,7 +38,7 @@ class Player:
         update_inventory(self.name, self.inventory)
     
         
-def create_player_object(player_name, money, carbon, shark, airport_name, airport_country, airport_type):
+def create_player_object(player_name, money, carbon, shark, inventory, airport_name, airport_country, airport_type):
     global player
-    player = Player(player_name, money, carbon, shark, airport_name, airport_country, airport_type)
+    player = Player(player_name, money, carbon, shark, inventory, airport_name, airport_country, airport_type)
     return player
