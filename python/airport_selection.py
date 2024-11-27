@@ -1,13 +1,14 @@
-from python.smoking import smoking_action
+
 from sql import fly
 from utilities import int_check
 
 # Task imports
 from dumpster import dumpster_dive
-from pickpocket import pickpocket
+
 from player_class import player
 from gambling import casino
 from smoking import smoking_action
+
 
 airport_cost = {"small": 100, "medium": 200, "large": 500}
 
@@ -46,7 +47,7 @@ def airport_selector():
         print(f"Error: Unexpected value for next_airport: {next_airport}")
         print(type(next_airport))
         return
-    player.display_status()
+    
 
 
 # Small airport tasks are selected here
@@ -64,7 +65,7 @@ def small_airport_task():
         if task_choice == "1":
             dumpster_dive()
         elif task_choice == "2":
-            pickpocket()
+            pass # api done for pickpocket
         elif task_choice == "3":
             return
         else:

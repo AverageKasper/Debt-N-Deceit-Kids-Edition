@@ -1,6 +1,6 @@
 from sql import (create_player, update_money, update_inventory,
                  update_carbon, update_shark)
-from utilities import anim_print
+
 
 
 class Player:
@@ -36,14 +36,8 @@ class Player:
     def update_inventory(self, amount):
         self.inventory += amount
         update_inventory(self.name, self.inventory)
-    def display_status(self): # This is pointless will be removed later
-        anim_print(f"""
-You are at {self.airport_name}, {self.airport_country}.
-You have {self.carbon} Carbon and {self.balance}€ in the bank.
-""")
-
-player=None
-
+    
+        
 def create_player_object(player_name, money, carbon, shark, inventory, airport_name, airport_country, airport_type):
     global player
     player = Player(player_name, money, carbon, shark, inventory, airport_name, airport_country, airport_type)
