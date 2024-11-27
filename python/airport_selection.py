@@ -43,7 +43,7 @@ def airport_selector():
         print(f"Error: Unexpected value for next_airport: {next_airport}")
         print(type(next_airport))
         return
-    player.display_status()
+    
 
 
 # Small airport tasks are selected here
