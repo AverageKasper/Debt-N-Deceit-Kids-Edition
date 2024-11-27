@@ -40,12 +40,18 @@ def clear_window():
 def int_check(player_input, max_value):
     while True:
         try:
+            # Try to convert the player_input to an integer
             player_input = int(player_input)
+
+            # Check if the input is within the valid range: 1 <= player_input <= max_value
             if 1 <= player_input <= max_value:
-                break
+                break  # Valid input, break the loop
             else:
+                # If input is outside the range, raise a ValueError
                 raise ValueError
         except ValueError:
-            player_input = input(f"Invalid option, enter a number between 1 and {max_value}: ")
+            # If there is an error (invalid input), prompt the user again
+            player_input = input(f"Please enter a valid number between 1 and {max_value}: ")
+
     return player_input
 

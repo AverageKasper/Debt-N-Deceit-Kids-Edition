@@ -108,9 +108,9 @@ def large_airport_task():
 
         task_choice = input("Choose a task: ")
         if task_choice == "1":
-            casino()
+            casino(player.balance)
         elif task_choice == "2":
-            smoking_action()
+            smoking_action(player.balance)
         elif task_choice == "3":
             return
         else:
