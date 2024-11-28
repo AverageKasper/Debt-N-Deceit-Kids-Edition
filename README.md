@@ -9,7 +9,7 @@ grant create, select, insert, update on flight_game.* to group_international@loc
 For alex; https://opentdb.com/api_config.php
 
 Api scripts complete: 
-small_task.py // contains pickpocketing and dumpster diving 
+<br>small_task.py // contains pickpocketing and dumpster diving 
 
 ## Ideas and what to check when testing
 **if jsons dont want to work with javascript, you can wrap the dictionary in a list so it should work eg.**
