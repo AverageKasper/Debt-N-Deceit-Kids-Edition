@@ -13,6 +13,8 @@ class Player:
         self.airport_name = airport_name
         self.airport_country = airport_country
         self.airport_type = airport_type
+        self.is_alive = True
+        self.death_reason = None
         create_player(self.name, self.balance, self.carbon, self.shark)
 
 
@@ -36,6 +38,12 @@ class Player:
     def update_inventory(self, amount):
         self.inventory += amount
         update_inventory(self.name, self.inventory)
+
+    def death(self, reason):
+        self.is_alive = False
+        self.death_reason=reason
+
+        print(f"{self.name} has lost. Reason: {reason}")
     
     
 # Temp Player for testing
