@@ -12,7 +12,7 @@ Api scripts complete:
 small_task.py // contains pickpocketing and dumpster diving 
 
 ## Ideas and what to check when testing
-** if jsons dont want to work with javascript, you can wrap the dictionary in a list so it should work eg. 
+**if jsons dont want to work with javascript, you can wrap the dictionary in a list so it should work eg. 
 ``` python
 result_json = [result]
 return jsonify(result_json)
