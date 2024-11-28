@@ -147,36 +147,45 @@ def suck_jolly():
 def suck_john():
     anim_print("You chose the John Player Special, spicy choice\n")
     anim_print("You start enjoying your pack of lollipops\n")
-    bum = input(anim_print(
-        "A random strangers appears and is desperate for a lollipop, do you give her one or not? (Yes or No): \n")).upper()
-    if bum == "YES":
-        anim_print("She is extremely thankful and offers you a special lollipop service in a back alley\n")
-        handjob = input("Do you accept: \n").upper()
-        if handjob == "YES":
-            anim_print("You accepted and received a rough treatment in a back alley\n")
-            anim_print("While you're getting treated, a mysterious guy comes up behind you and stabs you\n")
-            player_death = True
-            stabbed = True
-            clear_window()
 
+    # Loop to handle the "YES or NO" question for the stranger
+    while True:
+        bum = input(anim_print(
+            "A random stranger appears and is desperate for a lollipop, do you give her one or not? (Yes or No): \n")).upper()
 
-        elif handjob == "NO":
-            anim_print("You denied the strangers offer and continued sucking\n")
+        if bum == "YES":
+            anim_print("She is extremely thankful and offers you a special lollipop service in a back alley\n")
+
+            # Loop to handle the "YES or NO" question for the handjob
+            while True:
+                handjob = input("Do you accept: \n").upper()
+
+                if handjob == "YES":
+                    anim_print("You accepted and received a rough treatment in a back alley\n")
+                    anim_print("While you're getting treated, a mysterious guy comes up behind you and stabs you\n")
+                    player_death = True
+                    stabbed = True
+                    clear_window()
+                    return  # End function after death
+
+                elif handjob == "NO":
+                    anim_print("You denied the stranger's offer and continued sucking\n")
+                    anim_print("You're done sucking and get ready for your next flight\n")
+                    clear_window()
+                    return  # End function after denial
+
+                else:
+                    anim_print("Invalid choice. Please enter 'Yes' or 'No'.\n")
+
+        elif bum == "NO":
+            anim_print("You denied to give a lollipop to the stranger\n")
             anim_print("You're done sucking and get ready for your next flight\n")
             clear_window()
+            return  # End function after refusal
 
         else:
-            print("Invalid Choice")
-            return
+            anim_print("Invalid choice. Please enter 'Yes' or 'No'.\n")
 
-    elif bum == "NO":
-        anim_print("You denied to give a lollipop to the stranger\n")
-        anim_print("You're done sucking and get ready for your next flight\n")
-        clear_window()
-
-    else:
-        print("Invalid choice")
-        return
 
 #Salvia Function
 def suck_salvia():
@@ -191,14 +200,14 @@ def suck_salvia():
 
 #Chupachups function
 def suck_chupa():
-    anim_print("You chose American Black, strong choice\n")
-    anim_print("You start smoking \n")
+    anim_print("You chose ChupaChups, strong choice\n")
+    anim_print("You start sucking \n")
     anim_print("It's some strong ass stuff\n")
     anim_print("You start coughing and feeling terrible\n")
     anim_print("While you're out of it and suffering someone steals your wallet\n")
     black_money = random.randint(500, 1000)
     anim_print(f"You lost {black_money}€")
-    player.update_balande(black_money)
+    player.update_balance(black_money)
     clear_window()
 
 
