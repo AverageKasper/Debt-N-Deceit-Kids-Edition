@@ -7,8 +7,8 @@ import sys
 conn = mysql.connector.connect(
                 host='localhost',
                 database='flight_game',
-                user='munttu',
-                password='',
+                user='group_international',
+                password='EEKPAMSMAW',
                 autocommit=True,
                 collation="utf8mb4_general_ci"
                 )
@@ -37,14 +37,21 @@ def clear_window():
     os.system('cls' if os.name=='nt' else 'clear')
 
 # Checks if value can be changed to int, used when a number is needed for an answer
-def int_check(player_input):
-    while player_input is not int:
+def int_check(player_input, max_value):
+    while True:
         try:
+            # Try to convert the player_input to an integer
             player_input = int(player_input)
-        except:
-           player_input =  input("Invalid option, try again: ")
-        else:
-           player_input = int(player_input)
-           break 
+
+            # Check if the input is within the valid range: 1 <= player_input <= max_value
+            if 1 <= player_input <= max_value:
+                break  # Valid input, break the loop
+            else:
+                # If input is outside the range, raise a ValueError
+                raise ValueError
+        except ValueError:
+            # If there is an error (invalid input), prompt the user again
+            player_input = input(f"Please enter a valid number between 1 and {max_value}: ")
+
     return player_input
 
