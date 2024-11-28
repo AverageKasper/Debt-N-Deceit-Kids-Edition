@@ -15,7 +15,7 @@ async function getData(url) {
 }
 
 
-const victims = getData('http://127.0.0.1:4000/pickpocket').then(data => {
+const victims = getData('http://127.0.0.1:4000/pickpocket/victims_list').then(data => {
     console.log(data);
     button_1.innerHTML = `Victim 1:${data[0].victim_1.name}<br>Difficulty:${data[0].victim_1.difficulty}`;
     button_1.name = data[0].victim_1.name;
