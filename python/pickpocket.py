@@ -6,6 +6,40 @@ from player_class import player
 app = Flask(__name__)
 CORS(app)
 
+## MOVED TO API FOLDERS / THIS SHIT IS ALMOST DONE 4/5
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # Handles the pickpocketing options
 @app.route('/pickpocket')
 def pickpocket_victims():
