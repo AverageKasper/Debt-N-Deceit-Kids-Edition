@@ -37,6 +37,9 @@ class Player:
         self.inventory += amount
         update_inventory(self.name, self.inventory)
     
+    
+# Temp Player for testing
+#player = Player('test', 1000, 100, 0, 0, 'Helsinki-Vantaa', 'Finland', 'large_airport')
 player = None
 def create_player_object(player_name, money, carbon, shark, inventory, airport_name, airport_country, airport_type):
     global player
