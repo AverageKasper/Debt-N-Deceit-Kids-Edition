@@ -137,7 +137,7 @@ def snake_eyes():
         player.update_balance(+bet*10)
     elif dice_1 == dice_2:
         anim_print(f"Small win bozo! You won {bet} euros!\n")
-        player.update_balance(+bet *2)
+        player.update_balance(+bet)
     else:
         anim_print(f"You lost {bet} euros bozo\n")
         player.update_balance(-bet)
@@ -161,7 +161,7 @@ def dice():
         player.update_balance(-bet)
     elif dealer_total < player_total:
         anim_print(f"You won {bet} euros\n")
-        player.update_balance(+bet*2)
+        player.update_balance(+bet)
     else:
         anim_print("It's a tie!\n")
     anim_print(f"Your total balance is {player.balance} euros\n")
@@ -183,7 +183,7 @@ def hilo():
     anim_print(f"Second card: {second_card}\n")
     if (guess == 'HI' and second_card > first_card) or (guess == 'LO' and second_card < first_card):
         anim_print(f"You won {bet} euros\n")
-        player.update_balance(+bet*2)
+        player.update_balance(+bet)
     else:
         anim_print(f"You lost {bet} euros\n")
         player.update_balance(-bet)
