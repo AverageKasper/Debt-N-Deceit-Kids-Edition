@@ -1,5 +1,6 @@
 import random as r
 from flask import Blueprint, jsonify
+from python_app.player_class import player
 
 random_blueprint = Blueprint('random', __name__)
 
@@ -18,8 +19,7 @@ event_list = ["Sausage",
 def random_event():
     money = 0
     carbon = 0
-    kidney = 2
-    shark = 1
+    shark = 0
     result = {}
     text_result = ""
     if len(event_list) == 0:
@@ -51,6 +51,7 @@ The Shark is slowed down by this.
 
     # Organ seller event, You can sell your kidney
     # Needs to be completly changed
+    # Converted to mysterious merchant
     elif "mysterious merchant" == event_list[event_check]:
         text_result = """While wandering through the airport, you stumble upon a shadowy figure.
         <br>The figure speaks in hushed tones, offering a deal too tempting to ignore."""
@@ -72,8 +73,8 @@ The Shark is slowed down by this.
     # Russian roulette, The Shark calls you and offers to play a game. Ends game if russian roulette is played
     elif "morpheus" == event_list[event_check]:
         text_result = """You receive a mysterious message from an unknown number.
-        <br>The message reads: "Take the red pill, and the story ends. Take the
-        blue pill, and you stay in Wonderland and see how deep the rabbit hole goes."
+        <br>The message reads: "I offer you a choice.<br>Take a pill to end your journey
+        or continue to see how far you can run."
         <br>What do you do?"""
         event_list.remove("Loanshark")
     

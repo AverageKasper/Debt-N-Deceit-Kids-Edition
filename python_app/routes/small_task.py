@@ -1,7 +1,7 @@
 import random as r
 from flask import Blueprint, jsonify
 
-from python.player_class import player
+from python_app.player_class import player
 
 small_blueprint = Blueprint('small', __name__)
 

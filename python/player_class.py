@@ -1,4 +1,4 @@
-from sql import (create_player, update_money, update_inventory,
+from python_app.routes.sql import (create_player, update_money, update_inventory,
                  update_carbon, update_shark)
 
 
