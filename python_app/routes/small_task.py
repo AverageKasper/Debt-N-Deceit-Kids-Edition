@@ -116,13 +116,13 @@ def dumpster_dive():
     
     # Check what reward was got and update class stats accordingly
     if money > 0:
-        reward = money
+        reward = f"{money} €"
         #!#player.update_balance(money)
     elif carbon > 0:
-        reward = carbon
+        reward = f"{carbon} carbon"
         #!#player.update_carbon
     elif inventory > 0:
-        reward = inventory
+        reward = f"{inventory} items"
         #!#player.update_inventory
     else: 
         reward = "Nothing"
