@@ -7,7 +7,7 @@ from dumpster import dumpster_dive
 
 from player_class import player
 from gambling2 import casino
-from smoking import smoking_action
+from sucking_lollipop import lollipop_action
 
 
 airport_cost = {"small": 100, "medium": 200, "large": 500}
@@ -111,7 +111,7 @@ def large_airport_task():
         if task_choice == "1":
             casino()
         elif task_choice == "2":
-            smoking_action(352)
+            lollipop_action()
         elif task_choice == "3":
             return
         else:
