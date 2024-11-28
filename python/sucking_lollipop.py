@@ -191,8 +191,9 @@ def suck_salvia():
     anim_print("You wake up and feel extremely sugar rushed and confused \n")
     anim_print("You attack a random bystander while still sucking \n")
     player_lost = start_fighting(salvia_mode=True)
-    if player_lost == True:
+    if player_lost:
         player.death("Lost while being sugar high")
+        return
     clear_window()
 
 #Chupachups function
@@ -217,10 +218,7 @@ lollipop_brands = [
 
 #Main Function
 def lollipop_action():
-    player_death=False
-    stabbed = False
-    fighting_death=False
-    salvia_death=False
+    player_lost=False
 
 # Prints the cigarette list and asks which one you want to choose
     print(lollipop_brands)
