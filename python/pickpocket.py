@@ -2,6 +2,7 @@ import random as r
 from flask import Flask, Response
 from flask_cors import CORS
 import json
+from player_class import player
 app = Flask(__name__)
 CORS(app)
 
@@ -70,10 +71,15 @@ def calculate_pickpocket(name, difficulty):
                 win_money = r.randint(5,15) * difficulties[difficulty]
                 result = {"message": f"Success! You successfully pickpocketed {name} and earned {win_money}€.",
                           "money": win_money}
+                # Uncomment the line below when player is done
+                #player.update_balance(win_money)
+                
             else:
                 lose_money = r.randint(1,5) * difficulties[difficulty]
                 result = {"message": f"Failure! You got caught trying to pickpocket {name}. You got fined for {lose_money}€.",
                           "money": lose_money}
+                # Uncomment the line below when player is done
+                #player.update_balance(-lose_money)
     response = json.dumps(result)
     return Response(response=response, status=200, mimetype="application/json")
 
