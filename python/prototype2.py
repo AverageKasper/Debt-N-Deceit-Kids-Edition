@@ -74,8 +74,4 @@ player = Player(player_name, money, carbon, shark, "Helsinki-Vantaa", "Finland",
 print(player.balance)
 
 # Flying to a new location
-def fly():
-    
-
-    anim_print("Where would you like to fly to?\
 

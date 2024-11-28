@@ -7,8 +7,8 @@ import sys
 conn = mysql.connector.connect(
                 host='localhost',
                 database='flight_game',
-                user='kasper',
-                password='Monkey',
+                user='munttu',
+                password='',
                 autocommit=True,
                 collation="utf8mb4_general_ci"
                 )
