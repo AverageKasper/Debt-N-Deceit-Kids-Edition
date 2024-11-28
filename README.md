@@ -21,5 +21,4 @@ When game is done/ready for testing with class remove the comments marked with #
 
 try to come up for a easy task for the medium airport since its feeling a bit lonely :(
 
-current images are placeholders, might be used in end product but maybe we can generate new ones with AI
-**
+current images are placeholders, might be used in end product but maybe we can generate new ones with AI**
