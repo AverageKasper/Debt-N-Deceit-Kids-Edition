@@ -1,14 +1,15 @@
 
 from sql import fly
-from utilities import int_check
+
 
 # Task imports
 from dumpster import dumpster_dive
 
 from player_class import player
-from gambling2 import casino
-from sucking_lollipop import lollipop_action
 
+
+def int_check(value,max):
+    pass
 
 airport_cost = {"small": 100, "medium": 200, "large": 500}
 

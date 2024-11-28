@@ -4,6 +4,27 @@ import random
 from utilities import anim_print
 from utilities import conn
 
+## Trivia will be redone or moved to be handled in javascript
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 def trivia_game():
     try:
         

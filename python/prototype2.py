@@ -1,11 +1,9 @@
 # Basic imports
 import random as r
-from flask import Flask, Response
-from flask_cors import CORS
+
 
 from player_class import create_player_object
 
-from random_events import random_event
 
 def start_game():
     from sql import check_name
@@ -69,3 +67,4 @@ def game_loop():
         game_loops += 1
 
 
+start_game()

@@ -1,10 +1,10 @@
 import random as r
-from flask import Blueprint, jsonify, request, Response
+from flask import Blueprint, jsonify
 
-import json
+
 #from python.player_class import player
 
-pickpocket_blueprint = Blueprint('api', __name__)
+pickpocket_blueprint = Blueprint('pickpocket', __name__)
 
 
 # Handles the pickpocketing options
@@ -51,9 +51,8 @@ def pickpocket_victims():
         status_code = 500
         result = {"status_code": status_code,
                 "error": str(e)}
-    jsonvast = json.dumps(result)
-    return Response(response=jsonvast, status=status_code, mimetype="application/json")
 
+    return jsonify(result)
 
 # Handles the pickpocketing choice and chance
 @pickpocket_blueprint.route('/<name>/<difficulty>')
@@ -81,6 +80,5 @@ def calculate_pickpocket(name, difficulty):
                           "money": lose_money}
                 # Uncomment the line below when player is done
                 #player.update_balance(-lose_money)
-    response = json.dumps(result)
-    return Response(response=response, status=200, mimetype="application/json")
+    return jsonify(result)
 
