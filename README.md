@@ -14,4 +14,5 @@ When game is done/ready for testing with class remove the comments marked with #
 if jsons dont want to work with javascript, you can wrap the dictionary in a list so it should work eg. 
 ```
 result_json = [result]
+return jsonify(result_json)
 ```
