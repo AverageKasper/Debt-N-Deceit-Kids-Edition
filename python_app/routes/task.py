@@ -1,6 +1,6 @@
 #api formatting
 from flask import Blueprint, jsonify, request
-
+from python_app.player_class import player
 task_blueprint = Blueprint('task', __name__)
 
 
@@ -34,50 +34,16 @@ def small_airport_task():
     return jsonify(options)
 
 # Medium airport tasks are selected here
+@task_blueprint.route('/medium')
 def medium_airport_task():
-    task_done_count = 0
-
-    while task_done_count < 3:
-        print(f"You can do {3 - task_done_count} more tasks, the shark is {player.shark} steps behind you.")
-        print("You are at a medium airport, you can do the following tasks: ")
-        print("1. Trivia")
-        print("2. Go to the next airport")
-
-        task_choice = input("Choose a task: ")
-        if task_choice == "1":
-            pass
-        elif task_choice == "2":
-            return
-        else:
-            print("Invalid choice")
-            continue
-        task_done_count += 1
-        player.update_shark(-1)
+    options = {"1": "Trivia", "2": "Go to the next airport"}
+    return jsonify(options)
 
 # Large airport tasks are selected here
+@task_blueprint.route('/large')
 def large_airport_task():
-    task_done_count = 0
-
-    while task_done_count < 3:
-        print(f"You can do {3 - task_done_count} more tasks, the shark is {player.shark} steps behind you.")
-        print("You are at a small airport, you can do the following tasks: ")
-        print("1. Gamble")
-        print("2. Smoking break")
-        print("3. Go to the next airport")
-
-        task_choice = input("Choose a task: ")
-        if task_choice == "1":
-            casino()
-        elif task_choice == "2":
-            lollipop_action()
-        elif task_choice == "3":
-            return
-        else:
-            print("Invalid choice")
-            continue
-        task_done_count += 1
-        player.update_shark(-1)
-
+    options = {"1": "Gamble", "2": "Lollipop", "3": "Go to the next airport"}
+    return jsonify(options)
 
 
 # ideas

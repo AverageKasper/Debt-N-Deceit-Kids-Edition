@@ -3,11 +3,11 @@ import random as r
 from flask import Blueprint, jsonify, request
 
 from python_app.player_class import create_player_object
-from python_app.routes.random_events import random_event
 
-game_loop_blueprint = Blueprint('game_loop', __name__)
 
-@game_loop_blueprint.route('/start_game/<player_name>/<difficulty>')
+start_blueprint = Blueprint('start', __name__)
+
+@start_blueprint.route('/start_game/<player_name>/<difficulty>')
 def start_game(player_name, difficulty):
     easy_dif = [2500, 10000, 7]
     medium_dif = [1000, 7500, 5]

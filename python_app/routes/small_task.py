@@ -1,14 +1,14 @@
 import random as r
 from flask import Blueprint, jsonify
 
+from python.player_class import player
 
-#from python.player_class import player
+small_blueprint = Blueprint('small', __name__)
 
-pickpocket_blueprint = Blueprint('pickpocket', __name__)
-
+#When game is done remove the comments marked with #!#
 
 # Handles the pickpocketing options
-@pickpocket_blueprint.route('/victims_list')
+@small_blueprint.route('/pp/victims_list')
 def pickpocket_victims():
     try:
         dif1 = "★"
@@ -55,7 +55,7 @@ def pickpocket_victims():
     return jsonify(result)
 
 # Handles the pickpocketing choice and chance
-@pickpocket_blueprint.route('/<name>/<difficulty>')
+@small_blueprint.route('/pp/<name>/<difficulty>')
 def calculate_pickpocket(name, difficulty):
     result = {}
     difficulties= {"★": 10,
@@ -82,3 +82,57 @@ def calculate_pickpocket(name, difficulty):
                 #player.update_balance(-lose_money)
     return jsonify(result)
 
+
+
+
+# Function for dumpster diving at small airports, returns gained currencies
+@small_blueprint.route('/dive')
+def dumpster_dive():
+
+    # Randomizes percentage 
+    find =  r.randint(1,100)
+    money = 0
+    text_result = ""
+    carbon = 0
+    inventory = 0
+    # Get stuff based on what the percentage
+    if find < 30: ## A Little money
+        money = r.randint(50, 150)
+        text_result = f"You found a portable dvd player from the trash, you got {money}€ for it at the pawn shop!"
+        
+    elif find >= 30 and find <= 40: ## A Little bit more money
+        money = r.randint(200, 400)
+        text_result = f"You found a pair of earbuds from the trash, you got {money}€ for it at the pawn shop!"
+        
+    elif find > 40 and find <= 65: ## A lot of money
+        money = r.randint(500, 700)
+        text_result = f"You found an IPhone XS in the trash, you got {money}€ for it at the pawn shop!"
+        
+
+    elif find > 65 and find <= 85: ## You didnt find anything :(
+        text_result = "You dig through the trash but you dont find anything worthwile."
+
+    elif find > 85 and find <= 95: ## Get some CP for flying
+        carbon = r.randrange(100, 700, 100)
+        text_result = f"You found a voucher for CP from the trash! You got {carbon}CP!"
+        
+    elif find > 95 and find <= 100: ## Phallic object will save your ass
+        text_result = f"\nYou found 1 phallic object from the trash! It smells wierd."
+        inventory += 1
+    
+    if money > 0:
+        reward = money
+        #!#player.update_balance(money)
+    elif carbon > 0:
+        reward = carbon
+        #!#player.update_carbon
+    elif inventory > 0:
+        reward = inventory
+        #!#player.update_inventory
+    else: 
+        reward = "Nothing"
+    
+    result = {"text": text_result,
+              "reward": reward}
+    
+    return jsonify(result)
