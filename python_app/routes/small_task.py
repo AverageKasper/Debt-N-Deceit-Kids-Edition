@@ -71,19 +71,14 @@ def calculate_pickpocket(name, difficulty):
                 win_money = r.randint(5,15) * difficulties[difficulty]
                 result = {"message": f"Success! You successfully pickpocketed {name} and earned {win_money}€.",
                           "money": win_money}
-                # Uncomment the line below when player is done
-                #player.update_balance(win_money)
+                #!#player.update_balance(win_money)
                 
             else:
                 lose_money = r.randint(1,5) * difficulties[difficulty]
                 result = {"message": f"Failure! You got caught trying to pickpocket {name}. You got fined for {lose_money}€.",
                           "money": lose_money}
-                # Uncomment the line below when player is done
-                #player.update_balance(-lose_money)
+                #!#player.update_balance(-lose_money)
     return jsonify(result)
-
-
-
 
 # Function for dumpster diving at small airports, returns gained currencies
 @small_blueprint.route('/dive')
@@ -108,7 +103,6 @@ def dumpster_dive():
         money = r.randint(500, 700)
         text_result = f"You found an IPhone XS in the trash, you got {money}€ for it at the pawn shop!"
         
-
     elif find > 65 and find <= 85: ## You didnt find anything :(
         text_result = "You dig through the trash but you dont find anything worthwile."
 
@@ -120,6 +114,7 @@ def dumpster_dive():
         text_result = f"\nYou found 1 phallic object from the trash! It smells wierd."
         inventory += 1
     
+    # Check what reward was got and update class stats accordingly
     if money > 0:
         reward = money
         #!#player.update_balance(money)
