@@ -14,8 +14,7 @@ async function getData(url) {
     return data;
 }
 
-
-const victims = getData('http://127.0.0.1:4000/pickpocket/victims_list').then(async data => {
+const victims = getData('http://127.0.0.1:4000/small/pp/victims_list').then(async data => {
     console.log(data);
     if (Array.isArray(data) && data.length > 0 && data[0].victim_1 && data[0].victim_2 && data[0].victim_3) {
         button_1.innerHTML = `Victim 1:${data[0].victim_1.name}<br>Difficulty:${data[0].victim_1.difficulty}`;
@@ -37,7 +36,7 @@ const victims = getData('http://127.0.0.1:4000/pickpocket/victims_list').then(as
 button_1.addEventListener('click', async (evt) => {
     const victim = button_1.name;
     const difficulty = button_1.value;
-    const result = await fetch(`http://127.0.0.1:4000/pickpocket/${victim}/${difficulty}`)
+    const result = await fetch(`http://127.0.0.1:4000/small/pp/${victim}/${difficulty}`)
     const result_json = await result.json();
     console.log(result_json);
     pickpocket_result.innerText = result_json.message;
@@ -46,7 +45,7 @@ button_1.addEventListener('click', async (evt) => {
 button_2.addEventListener('click', async (evt) => {
     const victim = button_2.name;
     const difficulty = button_2.value;
-    const result = await fetch(`http://127.0.0.1:4000/pickpocket/${victim}/${difficulty}`)
+    const result = await fetch(`http://127.0.0.1:4000/small/pp/${victim}/${difficulty}`)
     const result_json = await result.json();
     console.log(result_json);
     pickpocket_result.innerText = result_json.message;
@@ -55,7 +54,7 @@ button_2.addEventListener('click', async (evt) => {
 button_3.addEventListener('click', async (evt) => {
     const victim = button_3.name;
     const difficulty = button_3.value;
-    const result = await fetch(`http://127.0.0.1:4000/pickpocket/${victim}/${difficulty}`)
+    const result = await fetch(`http://127.0.0.1:4000/small/pp/${victim}/${difficulty}`)
     const result_json = await result.json();
     console.log(result_json);
     pickpocket_result.innerText = result_json.message;

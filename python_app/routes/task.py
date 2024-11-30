@@ -2,30 +2,8 @@
 from flask import Blueprint, jsonify, request
 from python_app.player_class import player
 task_blueprint = Blueprint('task', __name__)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+# this whole sript is, in the end, kind of useless, 
+# since the tasks dont change and could be displayed in the javascript part.
 
 # Small airport tasks are selected here
 @task_blueprint.route('/small')
