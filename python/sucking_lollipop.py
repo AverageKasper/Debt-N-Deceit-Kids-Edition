@@ -5,8 +5,8 @@ from player_class import player
 
 # Turn based combat function
 def start_fighting(salvia_mode=False):
-    player_death=False
-    player = {
+    player_lost=False
+    fighter = {
         "name": "Player",
         "health": 100,
         "attacks": {
@@ -28,7 +28,7 @@ def start_fighting(salvia_mode=False):
 
     if salvia_mode:
         anim_print("You're in a violent, sugar-induced state!\n")
-        player["attacks"] = {
+        fighter["attacks"] = {
             "Moomin punch": (15, 30),
             "ChupaChups kick": (20, 40),
             "Sugar rage": (25, 50)
@@ -49,10 +49,10 @@ def start_fighting(salvia_mode=False):
     # Players turn function
     def player_turn():
         print("It's your turn! Choose your attack:")
-        for attack in player["attacks"]:
+        for attack in fighter["attacks"]:
             print(f"- {attack}")
         choice = input("Enter your attack: ").capitalize()
-        while choice not in player["attacks"]:
+        while choice not in fighter["attacks"]:
             print("Invalid choice. Please select a valid attack.")
             choice = input("Enter your attack: ").capitalize()
         return choice
@@ -67,12 +67,12 @@ def start_fighting(salvia_mode=False):
     print(f"The fight begins! {turn.capitalize()} throws the first punch!\n")
 
     # Main fight loop
-    while player["health"] > 0 and enemy["health"] > 0:
+    while fighter["health"] > 0 and enemy["health"] > 0:
 
         if turn == "player":
             # Player's turn
             player_attack = player_turn()
-            attack(player, enemy, player_attack)
+            attack(fighter, enemy, player_attack)
 
             # Check if enemy is dead after attack
             if enemy["health"] <= 0:
@@ -87,15 +87,14 @@ def start_fighting(salvia_mode=False):
         else:
             # Enemy's turn
             print("Enemy's turn...\n")
-            time.sleep(1)
             enemy_attack = enemy_turn()
-            attack(enemy, player, enemy_attack)
+            attack(enemy, fighter, enemy_attack)
 
             # Check if player is dead after attack
-            if player["health"] <= 0:
+            if fighter["health"] <= 0:
                 anim_print("You have been forced to stop sucking!\n")
-                player_death = True
-                return player_death
+                player_lost = True
+                return player_lost
 
             turn = "player"
 
@@ -110,7 +109,6 @@ def ring_pop():
     if businessman == "YES":
         player.update_balance(random_bucks)
         anim_print(f"You got {random_bucks}€")
-        # Yakuza ending in ohjelmisto 2?????
         clear_window()
     elif businessman == "NO":
         anim_print(f"You didn't get money, stupid ah decision.")
@@ -124,9 +122,9 @@ def suck_moomin():
         "An angry person asks you to stop and threatens to attack you, do you stop sucking (Yes or No): \n")).upper()
     if angry_person == "NO":
         clear_window()
-        player_death = start_fighting()
-        if player_death == True:
-            fighting_death = True
+        player_lost = start_fighting()
+        if player_lost == True:
+            player.death("Lost due to losing a fight over sucking a lollipop")
             clear_window()
         clear_window()
     if angry_person == "YES":
@@ -140,7 +138,7 @@ def suck_jolly():
         anim_print("They feel so bad for you that they give you money.\n")
         random_money=random.randint(100, 300)
         anim_print(f"You got {random_money}€")
-        player.update_balande(random_money)
+        player.update_balance(random_money)
         clear_window()
 
 #John Player function
@@ -163,8 +161,7 @@ def suck_john():
                 if handjob == "YES":
                     anim_print("You accepted and received a rough treatment in a back alley\n")
                     anim_print("While you're getting treated, a mysterious guy comes up behind you and stabs you\n")
-                    player_death = True
-                    stabbed = True
+                    player.death("Lost while sucking in a back alley")
                     clear_window()
                     return  # End function after death
 
@@ -193,9 +190,10 @@ def suck_salvia():
     anim_print("You experience a whole other lifetime in your lollipop trip\n")
     anim_print("You wake up and feel extremely sugar rushed and confused \n")
     anim_print("You attack a random bystander while still sucking \n")
-    player_death = start_fighting(salvia_mode=True)
-    if player_death == True:
-        salvia_death = True
+    player_lost = start_fighting(salvia_mode=True)
+    if player_lost:
+        player.death("Lost while being sugar high")
+        return
     clear_window()
 
 #Chupachups function
@@ -220,10 +218,7 @@ lollipop_brands = [
 
 #Main Function
 def lollipop_action():
-    player_death=False
-    stabbed = False
-    fighting_death=False
-    salvia_death=False
+    player_lost=False
 
 # Prints the cigarette list and asks which one you want to choose
     print(lollipop_brands)
@@ -245,7 +240,5 @@ def lollipop_action():
         suck_salvia()
     elif cig==lollipop_brands[5]:
         suck_chupa()
-
-    return player_death, stabbed, fighting_death, salvia_death
 
 
