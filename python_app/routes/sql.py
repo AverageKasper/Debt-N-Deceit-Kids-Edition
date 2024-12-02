@@ -1,7 +1,19 @@
 # Sql part for moneys and what else needs to be changed in the database
 # Currencies in database: Money, CP
 # Other stuff: Achievements, player logging, Items
-from utilities import conn
+import mysql.connector
+from flask import Blueprint, jsonify, Response
+
+sql_blueprint = Blueprint('sql', __name__)
+
+conn = mysql.connector.connect(
+                host='localhost',
+                database='flight_game',
+                user='group_international',
+                password='EEKPAMSMAW',
+                autocommit=True,
+                collation="utf8mb4_general_ci"
+                )
 
 def initial_setup():
     with conn.cursor() as cursor:
@@ -9,7 +21,7 @@ def initial_setup():
             CREATE TABLE IF NOT EXISTS player (
             id SERIAL PRIMARY KEY,
             player_name VARCHAR(100) NOT NULL,
-            location_id VARCHAR(100) DEFAULT 'EFHK',
+            location_id VARCHAR(100) DEFAULT 'Finland',
             money INT DEFAULT 0,
             carbon INT DEFAULT 0,
             shark INT DEFAULT 0,
@@ -24,7 +36,8 @@ def create_player(player_name, money, carbon, shark):
             INSERT INTO player (player_name, money, carbon, shark) VALUES (%s, %s, %s, %s)
         """, (player_name, money, carbon, shark))
         conn.commit()
-        
+
+@sql_blueprint.route('/check_name/<player_name>')
 def check_name(player_name):
     with conn.cursor() as cursor:
         cursor.execute("""
@@ -32,9 +45,9 @@ def check_name(player_name):
         """, (player_name,))
         name = cursor.fetchall()
         if cursor.rowcount > 0:
-            return True
+            return jsonify({"exists": True})
         else:
-            return False
+            return jsonify({"exists": False})
 
 def get_money(player_name):
     with conn.cursor() as cursor:
@@ -96,13 +109,34 @@ def update_inventory(player_name, inventory):
         """, (inventory, player_name))
         conn.commit()
 
+
+@sql_blueprint.route('/fly/<airport_type>')
 def fly(airport_type):
     with conn.cursor() as cursor:
         cursor.execute("""
-            SELECT name, iso_country, type, latitude_deg, longitude_deg FROM airport where continent = 'EU' and type = %s ORDER BY RAND() LIMIT 1
+            SELECT name, iso_country, type, ident, latitude_deg, longitude_deg FROM airport where continent = 'EU' and type = %s and name not like '%?%' ORDER BY RAND() LIMIT 1;
         """, (airport_type,))
-        location = cursor.fetchall()
-        return location[0]
+        location = cursor.fetchone()
+        if location:
+            location_data = {
+                "name": location[0],
+                "iso_country": location[1],
+                "type": location[2],
+                "ident": location[3],
+                "latitude_deg": location[4],
+                "longitude_deg": location[5]
+            }
+            return jsonify(location_data)
+        else:
+            return jsonify({"error": "No airport found"}), 404
+
+def update_location(player_name, icao):
+    with conn.cursor() as cursor:
+        cursor.execute("""
+            UPDATE player SET location_id = %s WHERE player_name = %s
+        """, (icao, player_name))
+        conn.commit()
+
 initial_setup()
 
 

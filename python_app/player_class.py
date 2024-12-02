@@ -1,4 +1,4 @@
-from sql import (create_player, update_money, update_inventory,
+from python_app.routes.sql import (create_player, update_money, update_inventory,
                  update_carbon, update_shark)
 
 
@@ -48,6 +48,9 @@ class Player:
     
 # Temp Player for testing
 #player = Player('test', 1000, 100, 0, 0, 'Helsinki-Vantaa', 'Finland', 'large_airport')
+
+# Player none doesnt need to be here (in theory) because when you run the game the player object is created at the start
+# This fixes some bullshit error in pycharm 
 player = None
 def create_player_object(player_name, money, carbon, shark, inventory, airport_name, airport_country, airport_type):
     global player
