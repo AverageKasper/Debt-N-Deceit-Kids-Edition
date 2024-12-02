@@ -1,13 +1,14 @@
 import random as r
-from flask import Flask, Response
-from flask_cors import CORS
-import json
-from player_class import player
-app = Flask(__name__)
-CORS(app)
+from flask import Blueprint, jsonify
+
+from python_app.player_class import player
+
+small_blueprint = Blueprint('small', __name__)
+
+#When game is done remove the comments marked with #!#
 
 # Handles the pickpocketing options
-@app.route('/pickpocket')
+@small_blueprint.route('/pp/victims_list')
 def pickpocket_victims():
     try:
         dif1 = "★"
@@ -50,12 +51,11 @@ def pickpocket_victims():
         status_code = 500
         result = {"status_code": status_code,
                 "error": str(e)}
-    jsonvast = json.dumps(result)
-    return Response(response=jsonvast, status=status_code, mimetype="application/json")
 
+    return jsonify(result)
 
 # Handles the pickpocketing choice and chance
-@app.route('/pickpocket/<name>/<difficulty>')
+@small_blueprint.route('/pp/<name>/<difficulty>')
 def calculate_pickpocket(name, difficulty):
     result = {}
     difficulties= {"★": 10,
@@ -71,18 +71,63 @@ def calculate_pickpocket(name, difficulty):
                 win_money = r.randint(5,15) * difficulties[difficulty]
                 result = {"message": f"Success! You successfully pickpocketed {name} and earned {win_money}€.",
                           "money": win_money}
-                # Uncomment the line below when player is done
-                #player.update_balance(win_money)
+                #!#player.update_balance(win_money)
                 
             else:
                 lose_money = r.randint(1,5) * difficulties[difficulty]
                 result = {"message": f"Failure! You got caught trying to pickpocket {name}. You got fined for {lose_money}€.",
                           "money": lose_money}
-                # Uncomment the line below when player is done
-                #player.update_balance(-lose_money)
-    response = json.dumps(result)
-    return Response(response=response, status=200, mimetype="application/json")
+                #!#player.update_balance(-lose_money)
+    return jsonify(result)
 
+# Function for dumpster diving at small airports, returns gained currencies
+@small_blueprint.route('/dive')
+def dumpster_dive():
 
-if __name__ == '__main__':
-    app.run(use_reloader=True, host='127.0.0.1', port=4000)
+    # Randomizes percentage 
+    find =  r.randint(1,100)
+    money = 0
+    text_result = ""
+    carbon = 0
+    inventory = 0
+    # Get stuff based on what the percentage
+    if find < 30: ## A Little money
+        money = r.randint(50, 150)
+        text_result = f"You found a portable dvd player from the trash, you got {money}€ for it at the pawn shop!"
+        
+    elif find >= 30 and find <= 40: ## A Little bit more money
+        money = r.randint(200, 400)
+        text_result = f"You found a pair of earbuds from the trash, you got {money}€ for it at the pawn shop!"
+        
+    elif find > 40 and find <= 65: ## A lot of money
+        money = r.randint(500, 700)
+        text_result = f"You found an IPhone XS in the trash, you got {money}€ for it at the pawn shop!"
+        
+    elif find > 65 and find <= 85: ## You didnt find anything :(
+        text_result = "You dig through the trash but you dont find anything worthwile."
+
+    elif find > 85 and find <= 95: ## Get some CP for flying
+        carbon = r.randrange(100, 700, 100)
+        text_result = f"You found a voucher for CP from the trash! You got {carbon}CP!"
+        
+    elif find > 95 and find <= 100: ## Phallic object will save your ass
+        text_result = f"\nYou found 1 phallic object from the trash! It smells wierd."
+        inventory += 1
+    
+    # Check what reward was got and update class stats accordingly
+    if money > 0:
+        reward = f"{money} €"
+        #!#player.update_balance(money)
+    elif carbon > 0:
+        reward = f"{carbon} carbon"
+        #!#player.update_carbon(carbon)
+    elif inventory > 0:
+        reward = f"{inventory} items"
+        #!#player.update_inventory(inventory)
+    else: 
+        reward = "Nothing"
+    
+    result = {"text": text_result,
+              "reward": reward}
+    
+    return jsonify(result)
