@@ -2,7 +2,7 @@
 # Currencies in database: Money, CP
 # Other stuff: Achievements, player logging, Items
 import mysql.connector
-from flask import Blueprint, jsonify, request
+from flask import Blueprint, jsonify, Response
 
 sql_blueprint = Blueprint('sql', __name__)
 
@@ -114,10 +114,21 @@ def update_inventory(player_name, inventory):
 def fly(airport_type):
     with conn.cursor() as cursor:
         cursor.execute("""
-            SELECT name, iso_country, type, ident, latitude_deg, longitude_deg FROM airport where continent = 'EU' and type = %s ORDER BY RAND() LIMIT 1
+            SELECT name, iso_country, type, ident, latitude_deg, longitude_deg FROM airport where continent = 'EU' and type = %s and name not like '%?%' ORDER BY RAND() LIMIT 1;
         """, (airport_type,))
-        location = cursor.fetchall()
-        return location[0]
+        location = cursor.fetchone()
+        if location:
+            location_data = {
+                "name": location[0],
+                "iso_country": location[1],
+                "type": location[2],
+                "ident": location[3],
+                "latitude_deg": location[4],
+                "longitude_deg": location[5]
+            }
+            return jsonify(location_data)
+        else:
+            return jsonify({"error": "No airport found"}), 404
 
 def update_location(player_name, icao):
     with conn.cursor() as cursor:

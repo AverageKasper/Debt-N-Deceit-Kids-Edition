@@ -120,10 +120,10 @@ def dumpster_dive():
         #!#player.update_balance(money)
     elif carbon > 0:
         reward = f"{carbon} carbon"
-        #!#player.update_carbon
+        #!#player.update_carbon(carbon)
     elif inventory > 0:
         reward = f"{inventory} items"
-        #!#player.update_inventory
+        #!#player.update_inventory(inventory)
     else: 
         reward = "Nothing"
     

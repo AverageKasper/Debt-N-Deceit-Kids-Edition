@@ -8,6 +8,5 @@ medium_blueprint = Blueprint('medium', __name__)
 def trivia_questions():
     pyyntö = "https://opentdb.com/api.php?amount=5"
     vastaus = requests.get(pyyntö).json()
-    print(vastaus)
     return vastaus
 
