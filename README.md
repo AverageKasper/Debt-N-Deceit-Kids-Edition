@@ -15,7 +15,7 @@ Api scripts complete:
 
 
 ## What to check when testing
-**if jsons dont want to work with javascript, you can wrap the dictionary in a list so it should work. most API returns should be in a result variable. Example:**
+**if jsons dont want to work with javascript, you can wrap the dictionary in a list so it should work. most API returns should be in a result variable.(After some testing the way it is works but ill leave this here just in case) Example:**
 ``` python
 result_json = [result]
 return jsonify(result_json)
