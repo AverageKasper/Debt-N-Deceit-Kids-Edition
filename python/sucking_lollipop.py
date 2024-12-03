@@ -30,7 +30,7 @@ def start_fighting(salvia_mode=False):
         anim_print("You're in a violent, sugar-induced state!\n")
         fighter["attacks"] = {
             "Moomin punch": (15, 30),
-            "ChupaChups kick": (20, 40),
+            "Chupa kick": (20, 40),
             "Sugar rage": (25, 50)
         }
         enemy["name"] = "Lollipop hater"

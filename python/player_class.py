@@ -42,8 +42,14 @@ class Player:
     def death(self, reason):
         self.is_alive = False
         self.death_reason=reason
-
         print(f"{self.name} has lost. Reason: {reason}")
+
+    def validate_bet(self, bet):
+        if bet<=0:
+            return {"Error": "Bet must be greater than zero"}
+        if bet>self.balance:
+            return {"Error": "Insufficient funds"}
+        return None
     
     
 # Temp Player for testing
