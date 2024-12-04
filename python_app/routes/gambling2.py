@@ -1,5 +1,5 @@
 import random as r
-from player_class import player
+from python_app.player_class import player
 from flask import jsonify, request, Flask, session
 from flask_cors import CORS
 

@@ -1,4 +1,4 @@
-from sql import (create_player, update_money, update_inventory,
+from python_app.routes.sql import (create_player, update_money, update_inventory,
                  update_carbon, update_shark)
 
 
@@ -42,7 +42,9 @@ class Player:
     def death(self, reason):
         self.is_alive = False
         self.death_reason=reason
+
         print(f"{self.name} has lost. Reason: {reason}")
+
 
     def validate_bet(self, bet):
         if bet<=0:
@@ -51,9 +53,11 @@ class Player:
             return {"Error": "Insufficient funds"}
         return None
     
-    
 # Temp Player for testing
 #player = Player('test', 1000, 100, 0, 0, 'Helsinki-Vantaa', 'Finland', 'large_airport')
+
+# Player none doesnt need to be here (in theory) because when you run the game the player object is created at the start
+# This fixes some bullshit error in pycharm 
 player = None
 def create_player_object(player_name, money, carbon, shark, inventory, airport_name, airport_country, airport_type):
     global player
