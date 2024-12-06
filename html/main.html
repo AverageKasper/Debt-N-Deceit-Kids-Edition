@@ -9,12 +9,10 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
-    crossorigin=""/>
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
     <link rel="stylesheet" href="css/style.css">
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-     integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
-     crossorigin=""></script>
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
     <script ref="script" src="../javascript/main.js" defer></script>
 </head>
 
@@ -29,18 +27,20 @@
                 <div id="map">Main Box</div>
             </div>
             <div id="button-div" class="button-group">
-                <div class="stat-block">
-                <p>Name: </p>
-                <p>Money: </p>
-                <p>Debt: </p>
-                <p>Shark: </p>
-                <p>Items</p>
+                <div id="stat-block" class="stat-block">
+                    <p>Name: </p>
+                    <p>Money: </p>
+                    <p>Debt: </p>
+                    <p>Shark: </p>
+                    <p>Inventory: </p>
                 </div>
-                <h2>What do you want to do?</h2>
-                <button class="button">choice 1 </button>
-                <button class="button">choice 2</button>
-                <button class="button">choice 3</button>
-                <button class="button">next airport</button>
+                <h3>Where do you want to fly?</h3>
+                <div id="main-buttons" class="main-buttons">
+                    <button id="button-1" class="button">choice 1 </button>
+                    <button id="button-2" class="button">choice 2</button>
+                    <button class="button">choice 3</button>
+                    <button class="button">next airport</button>
+                </div>
             </div>
         </div>
     </div>
@@ -58,7 +58,19 @@
         </div>
     </div>
     <div id="gambling-modal" class="modal">
-        
+
+    </div>
+    <div id="pp-modal" class="modal">
+        <div class="modal-content">
+            <h1>You have chosen the life of crime</h1>
+            <p>Who do you want to pickpocket from </p>
+            <button id="pp_button_1" class="button"></button>
+            <button id="pp_button_2" class="button"></button>
+            <button id="pp_button_3" class="button"></button>
+            <h3 id="pickpocket_result"></h3>
+            <button id="close" class="button">Close</button>
+            <script defer src="../javascript/pickpocketing.js"></script>
+        </div>
     </div>
 </body>
 
