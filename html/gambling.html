@@ -3,35 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Casino Game</title>
+    <title>Casino Games</title>
     <link rel="stylesheet" href="css/gambling.css">
 </head>
 <body>
-    <div id="casino">
-        <h1>Welcome to the Casino!</h1>
-        <div id="balance-section">
-            <p>Your Balance: <span id="balance">0</span> EUR</p>
-        </div>
-        <div id="games">
-            <button id="snake-eyes-btn">Play Snake Eyes</button>
-            <button id="hilo-btn">Play Hi-Lo</button>
-            <button id="blackjack-btn">Play Blackjack</button>
-            <button id="horse-race-btn">Play Horse Race</button>
-        </div>
+    <h1>Welcome to the Casino!</h1>
+    <p>Your current balance: <span id="balance">0</span> EUR</p>
 
-        <div id="game-result"></div>
-
-        <div id="bet-section">
-            <label for="bet">Enter Bet: </label>
-            <input type="number" id="bet" name="bet" min="1" />
-        </div>
-
-        <div id="guess-section" style="display: none;">
-            <label for="guess">Guess (HI or LO): </label>
-            <input type="text" id="guess" name="guess" />
-        </div>
+    <h2>Place Your Bet</h2>
+    <input type="number" id="bet" placeholder="Enter bet amount" />
+    <div id="guess-section">
+        <input type="text" id="guess" placeholder="Enter your guess (HI or LO)" />
     </div>
+
+    <h2>Choose a Game</h2>
+    <button id="snake-eyes-btn" class="button">Play Snake Eyes</button>
+    <button id="hilo-btn" class="button">Play Hi-Lo</button>
+    <button id="horse-race-btn" class="button">Play Horse Racing</button>
+    <button id="start-blackjack-btn" class="button">Start Blackjack</button>
+
+    <div id="blackjack-status"></div>
+    <button id="hitBtn" class="button" style="display:none;">Hit</button>
+    <button id="standBtn" class="button" style="display:none;">Stand</button>
+
+    <div id="game-result"></div>
 
     <script src="../javascript/gambling.js"></script>
 </body>
 </html>
+
