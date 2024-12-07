@@ -1,8 +1,9 @@
 import random as r
-from flask import Blueprint, jsonify, request, session
+from flask import Blueprint, jsonify, request, session, Flask
 from python_app.player_class import player
 
 casino_blueprint=Blueprint('casino', __name__)
+
 
 @casino_blueprint.route('/menu', methods=['GET'])
 def casino_menu():

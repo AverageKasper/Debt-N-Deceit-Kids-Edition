@@ -1,0 +1,56 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+#casino {
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    text-align: center;
+}
+
+h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+button {
+    background-color: #28a745;
+    color: white;
+    padding: 10px;
+    margin: 10px 0;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+button:hover {
+    background-color: #218838;
+}
+
+#bet-section {
+    margin: 20px 0;
+}
+
+input[type="number"], input[type="text"] {
+    padding: 5px;
+    margin-top: 5px;
+    width: 100px;
+    text-align: center;
+}
+
+#game-result {
+    margin-top: 20px;
+}
+
+#guess-section {
+    margin-top: 10px;
+}
