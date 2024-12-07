@@ -8,10 +8,6 @@ casino_blueprint=Blueprint('casino', __name__)
 @casino_blueprint.route('/menu', methods=['GET'])
 def casino_menu():
     try:
-
-        #Testing balance
-        player.balance=1000
-
         if player.balance<=0:
             return jsonify ({
                 "message":"You don't have any money. Please add funs to play",

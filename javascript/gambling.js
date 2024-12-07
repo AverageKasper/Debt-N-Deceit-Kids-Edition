@@ -1,20 +1,17 @@
 'use strict';
 
+// Button elements
 const snakeEyesBtn = document.getElementById('snake-eyes-btn');
 const hiloBtn = document.getElementById('hilo-btn');
+const horseRaceBtn = document.getElementById('horse-race-btn');
 const startBlackjackBtn = document.getElementById('start-blackjack-btn');
 const hitBtn = document.getElementById('hitBtn');
 const standBtn = document.getElementById('standBtn');
-const blackjackStatus = document.getElementById('blackjack-status');
-let blackjackGameId=null;
-const horseRaceBtn = document.getElementById('horse-race-btn');
-const betInput = document.getElementById('bet');
-const guessInput = document.getElementById('guess');
 const balanceSpan = document.getElementById('balance');
+const betInput = document.getElementById('bet');
 const gameResultDiv = document.getElementById('game-result');
-const guessSection = document.getElementById('guess-section');
 
-// Get initial balance from the backend
+// Fetch initial balance from the backend
 function getBalance() {
     fetch('http://localhost:4000/casino/menu', {
         method: 'GET',
@@ -22,149 +19,110 @@ function getBalance() {
     })
     .then(response => response.json())
     .then(data => {
-        balanceSpan.innerText = data.balance;
+        balanceSpan.textContent = data.balance;
     })
-    .catch(error => console.error('Error fetching balance:', error));
+    .catch(error => {
+        console.error('Error fetching balance:', error);
+        balanceSpan.textContent = 'Error';
+    });
 }
 
-// Play Snake Eyes
-snakeEyesBtn.addEventListener('click', () => {
-    guessSection.style.display='none';
-    const bet = betInput.value;
-    if (bet <= 0) return alert('Please enter a valid bet.');
+// Helper to handle bets
+function placeBet(game) {
+    const betAmount = parseFloat(betInput.value);
 
-    fetch('http://localhost:4000/casino/snake-eyes', {
+    if (isNaN(betAmount) || betAmount <= 0) {
+        alert('Please enter a valid bet amount.');
+        return;
+    }
+
+    fetch(`http://localhost:4000/casino/${game}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ bet: bet })
+        body: JSON.stringify({ bet: betAmount })
     })
     .then(response => response.json())
     .then(data => {
-        gameResultDiv.innerHTML = `${data.message}. Your rolls: ${data.rolls.join(', ')}. Winnings: ${data.winnings} EUR.`;
-        balanceSpan.innerText = data.balance;
+        if (data.success) {
+            balanceSpan.textContent = data.new_balance;
+            gameResultDiv.textContent = data.message;
+        } else {
+            alert(data.error || 'Something went wrong!');
+        }
     })
-    .catch(error => console.error('Error playing Snake Eyes:', error));
-});
+    .catch(error => {
+        console.error('Error placing bet:', error);
+        alert('An error occurred while placing the bet.');
+    });
+}
 
-// Play Hi-Lo
-hiloBtn.addEventListener('click', () => {
-    guessSection.style.display='block';
-    const bet = betInput.value;
-    const guess = guessInput.value.toUpperCase();
-    if (bet <= 0 || (guess !== 'HI' && guess !== 'LO')) return alert('Please enter a valid bet and guess.');
+// Event listeners for game buttons
+snakeEyesBtn.addEventListener('click', () => placeBet('snake-eyes'));
+hiloBtn.addEventListener('click', () => placeBet('hilo'));
+horseRaceBtn.addEventListener('click', () => placeBet('horse-race'));
 
-    fetch('http://localhost:4000/casino/hilo', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ bet: bet, guess: guess })
-    })
-    .then(response => response.json())
-    .then(data => {
-        gameResultDiv.innerHTML = `${data.message}. First card: ${data.first_card}, Second card: ${data.second_card}. Winnings: ${data.winnings} EUR.`;
-        balanceSpan.innerText = data.balance;
-    })
-    .catch(error => console.error('Error playing Hi-Lo:', error));
-});
-
-// Play Horse Race
-horseRaceBtn.addEventListener('click', () => {
-    guessSection.style.display='none';
-    const bet = betInput.value;
-    const horse = prompt("Enter your bet horse (Diddy, Kolovastaava, Sakke, Rinne, Uusitalo):");
-    if (bet <= 0 || !horse) return alert('Please enter a valid bet and select a horse.');
-
-    fetch('http://localhost:4000/casino/horse_race', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ bet: bet, horse: horse })
-    })
-    .then(response => response.json())
-    .then(data => {
-        gameResultDiv.innerHTML = `${data.result} Race results: ${JSON.stringify(data.race_results)}. Odds: ${JSON.stringify(data.odds)}.`;
-        balanceSpan.innerText = data.player_balance;
-    })
-    .catch(error => console.error('Error playing Horse Race:', error));
-});
-
-// Play Black Jack
 startBlackjackBtn.addEventListener('click', () => {
-    const bet = betInput.value;
-    if (bet <= 0) return alert('Please enter a valid bet.');
-
     fetch('http://localhost:4000/casino/blackjack/start', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ bet: bet })
+        headers: { 'Content-Type': 'application/json' }
     })
     .then(response => response.json())
     .then(data => {
-        if (data.error) return alert(data.error);
-
-        blackjackGameId = data.game_id;
-        blackjackStatus.innerHTML = `
-            <p>Game started! Your hand: ${data.player_hand.join(', ')}</p>
-            <p>Dealer's hand: ${data.dealer_hand[0]}, Hidden</p>
-            <p>Your hand value: ${data.player_value}</p>
-        `;
-        hitBtn.style.display = 'inline-block';
-        standBtn.style.display = 'inline-block';
+        if (data.success) {
+            gameResultDiv.textContent = 'Blackjack started. Your move!';
+            hitBtn.style.display = 'inline';
+            standBtn.style.display = 'inline';
+        } else {
+            alert(data.error || 'Could not start Blackjack.');
+        }
     })
-    .catch(error => console.error('Error starting Blackjack:', error));
+    .catch(error => {
+        console.error('Error starting Blackjack:', error);
+        alert('An error occurred while starting Blackjack.');
+    });
 });
 
 hitBtn.addEventListener('click', () => {
-    if (!blackjackGameId) return alert('Start a game first.');
-
-    fetch('http://localhost:4000/casino/blackjack/play', {
+    fetch('http://localhost:4000/casino/blackjack/hit', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ game_id: blackjackGameId, action: 'hit' })
+        headers: { 'Content-Type': 'application/json' }
     })
     .then(response => response.json())
     .then(data => {
-        if (data.result) { // Game finished
-            blackjackStatus.innerHTML = `
-                <p>${data.result}</p>
-                <p>Your hand: ${data.player_hand.join(', ')}</p>
-                <p>Balance: ${data.balance} EUR</p>
-            `;
-            hitBtn.style.display = 'none';
-            standBtn.style.display = 'none';
+        if (data.success) {
+            gameResultDiv.textContent = data.message;
+            if (data.game_over) {
+                hitBtn.style.display = 'none';
+                standBtn.style.display = 'none';
+            }
         } else {
-            blackjackStatus.innerHTML = `
-                <p>Your hand: ${data.player_hand.join(', ')}</p>
-                <p>Your hand value: ${data.player_value}</p>
-                <p>Your move: hit or stand.</p>
-            `;
+            alert(data.error || 'Error during Blackjack move.');
         }
     })
-    .catch(error => console.error('Error during hit:', error));
+    .catch(error => {
+        console.error('Error hitting in Blackjack:', error);
+    });
 });
 
 standBtn.addEventListener('click', () => {
-    if (!blackjackGameId) return alert('Start a game first.');
-
-    fetch('http://localhost:4000/casino/blackjack/play', {
+    fetch('http://localhost:4000/casino/blackjack/stand', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ game_id: blackjackGameId, action: 'stand' })
+        headers: { 'Content-Type': 'application/json' }
     })
     .then(response => response.json())
     .then(data => {
-        blackjackStatus.innerHTML = `
-            <p>${data.result}</p>
-            <p>Your hand: ${data.player_hand.join(', ')}</p>
-            <p>Dealer's hand: ${data.dealer_hand.join(', ')}</p>
-            <p>Your hand value: ${data.player_value}</p>
-            <p>Dealer's hand value: ${data.dealer_value}</p>
-            <p>Balance: ${data.balance} EUR</p>
-        `;
-        hitBtn.style.display = 'none';
-        standBtn.style.display = 'none';
+        if (data.success) {
+            gameResultDiv.textContent = data.message;
+            hitBtn.style.display = 'none';
+            standBtn.style.display = 'none';
+        } else {
+            alert(data.error || 'Error during Blackjack move.');
+        }
     })
-    .catch(error => console.error('Error during stand:', error));
+    .catch(error => {
+        console.error('Error standing in Blackjack:', error);
+    });
 });
 
-
-// Initialize the balance on page load
-window.onload = getBalance;
+// Initialize balance on page load
+getBalance();

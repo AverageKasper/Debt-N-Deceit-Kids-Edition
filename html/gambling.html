@@ -8,27 +8,28 @@
 </head>
 <body>
     <h1>Welcome to the Casino!</h1>
+
     <p>Your current balance: <span id="balance">0</span> EUR</p>
 
     <h2>Place Your Bet</h2>
     <input type="number" id="bet" placeholder="Enter bet amount" />
-    <div id="guess-section">
-        <input type="text" id="guess" placeholder="Enter your guess (HI or LO)" />
-    </div>
 
     <h2>Choose a Game</h2>
-    <button id="snake-eyes-btn" class="button">Play Snake Eyes</button>
-    <button id="hilo-btn" class="button">Play Hi-Lo</button>
-    <button id="horse-race-btn" class="button">Play Horse Racing</button>
-    <button id="start-blackjack-btn" class="button">Start Blackjack</button>
+    <div class="buttons">
+        <button id="snake-eyes-btn" class="button">Play Snake Eyes</button>
+        <button id="hilo-btn" class="button">Play Hi-Lo</button>
+        <button id="horse-race-btn" class="button">Play Horse Racing</button>
+        <button id="start-blackjack-btn" class="button">Start Blackjack</button>
+    </div>
 
-    <div id="blackjack-status"></div>
-    <button id="hitBtn" class="button" style="display:none;">Hit</button>
-    <button id="standBtn" class="button" style="display:none;">Stand</button>
+    <div id="blackjack-controls" style="display: none;">
+        <button id="hitBtn" class="button">Hit</button>
+        <button id="standBtn" class="button">Stand</button>
+    </div>
 
-    <div id="game-result"></div>
+    <h3>Game Results</h3>
+    <div id="game-result" class="result">Place a bet and choose a game to see results.</div>
 
-    <script src="../javascript/gambling.js"></script>
+    <script src="javascript/gambling.js"></script>
 </body>
 </html>
-
