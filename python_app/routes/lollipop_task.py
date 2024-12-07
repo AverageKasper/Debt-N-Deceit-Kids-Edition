@@ -1,7 +1,7 @@
 import random
 import time
 from flask import Blueprint, jsonify, request
-from python_app.utilities import anim_print, clear_window  # these are not needed but Just in case u know
+#from python_app.utilities import anim_print, clear_window  # these are not needed but Just in case u know
 from python_app.player_class import player
 
 # Create a Flask Blueprint
