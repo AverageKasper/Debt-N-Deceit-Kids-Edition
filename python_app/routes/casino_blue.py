@@ -1,12 +1,16 @@
 import random as r
 from flask import Blueprint, jsonify, request, session, Flask
-from python_app.player_class import player
+from python_app.player_class import player, create_player_object
+
 
 casino_blueprint=Blueprint('casino', __name__)
 
 
 @casino_blueprint.route('/menu', methods=['GET'])
 def casino_menu():
+    global player
+    if player is None:
+        create_player_object('test', 1000, 100, 0, 0, 'Helsinki-Vantaa', 'Finland', 'large_airport')
     try:
         if player.balance<=0:
             return jsonify ({
