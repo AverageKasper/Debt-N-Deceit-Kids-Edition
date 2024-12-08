@@ -6,8 +6,8 @@ const gameResultDiv = document.getElementById('game-result');
 const gameContainers = document.querySelectorAll('.game-container');
 
 // Fetch initial balance from the backend
-function getBalance() {
-    fetch('http://localhost:4000/casino/menu', {
+async function getBalance() {
+    await fetch('http://localhost:4000/casino/menu', {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' }
     })

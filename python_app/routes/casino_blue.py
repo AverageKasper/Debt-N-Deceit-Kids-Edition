@@ -1,16 +1,17 @@
 import random as r
 from flask import Blueprint, jsonify, request, session, Flask
-from python_app.player_class import player, create_player_object
-
+from python_app.player_class import create_player_object
 
 casino_blueprint=Blueprint('casino', __name__)
 
 
 @casino_blueprint.route('/menu', methods=['GET'])
 def casino_menu():
-    global player
-    if player is None:
-        create_player_object('test', 1000, 100, 0, 0, 'Helsinki-Vantaa', 'Finland', 'large_airport')
+
+
+    create_player_object('test', 1000, 100, 0, 0, 'Helsinki-Vantaa', 'Finland', 'large_airport')
+    from python_app.player_class import player
+    
     try:
         if player.balance<=0:
             return jsonify ({
@@ -29,6 +30,7 @@ def casino_menu():
 
 @casino_blueprint.route('/horse_race', methods=['POST'])
 def horse_race():
+    from python_app.player_class import player
     try:
         data = request.json
 
@@ -100,6 +102,7 @@ def calculate_hand(hand):
 
 @casino_blueprint.route('/blackjack/start', methods=['POST'])
 def start_blackjack():
+    from python_app.player_class import player
     try:
         data = request.json
         bet = data.get("bet")
@@ -144,6 +147,7 @@ def start_blackjack():
         return jsonify({"error": str(e)}), 500
 
 def play_blackjack():
+    from python_app.player_class import player
     try:
         data = request.json
         game_id = data.get("game_id")
@@ -221,6 +225,7 @@ def play_blackjack():
 
 @casino_blueprint.route('/snake-eyes', methods=['POST'])
 def snake_eyes():
+    from python_app.player_class import player
     try:
         data = request.json
         bet = data.get("bet", 0)
@@ -261,6 +266,7 @@ def snake_eyes():
 
 @casino_blueprint.route('/hilo', methods=['POST'])
 def hilo():
+    from python_app.player_class import player
     try:
         data = request.json
 
