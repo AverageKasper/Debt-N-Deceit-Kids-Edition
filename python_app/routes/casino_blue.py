@@ -4,7 +4,6 @@ from python_app.player_class import create_player_object
 
 casino_blueprint=Blueprint('casino', __name__)
 
-
 @casino_blueprint.route('/menu', methods=['GET'])
 def casino_menu():
 
