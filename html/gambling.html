@@ -3,33 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Casino Games</title>
-    <link rel="stylesheet" href="css/gambling.css">
+    <title>Gambling Games</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="../javascript/gambling.js" defer></script>
+    <style>
+        .game-container {
+            display: none; /* Hidden by default */
+            border: 1px solid #ccc;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .active {
+            display: block; /* Only visible when active */
+        }
+    </style>
 </head>
 <body>
-    <h1>Welcome to the Casino!</h1>
+    <h1>Gambling Games</h1>
+    <p>Current Balance: <span id="balance">Loading...</span></p>
+    <label for="bet">Enter your bet:</label>
+    <input type="number" id="bet" placeholder="Enter your bet">
 
-    <p>Your current balance: <span id="balance">0</span> EUR</p>
-
-    <h2>Place Your Bet</h2>
-    <input type="number" id="bet" placeholder="Enter bet amount" />
-
-    <h2>Choose a Game</h2>
-    <div class="buttons">
-        <button id="snake-eyes-btn" class="button">Play Snake Eyes</button>
-        <button id="hilo-btn" class="button">Play Hi-Lo</button>
-        <button id="horse-race-btn" class="button">Play Horse Racing</button>
-        <button id="start-blackjack-btn" class="button">Start Blackjack</button>
+    <div id="game-buttons">
+        <button onclick="showGame('snake-eyes')">Play Snake Eyes</button>
+        <button onclick="showGame('hilo')">Play Hi-Lo</button>
+        <button onclick="showGame('horse-race')">Play Horse Race</button>
+        <button onclick="showGame('blackjack')">Play Blackjack</button>
     </div>
 
-    <div id="blackjack-controls" style="display: none;">
-        <button id="hitBtn" class="button">Hit</button>
-        <button id="standBtn" class="button">Stand</button>
+    <div id="snake-eyes" class="game-container">
+        <h2>Snake Eyes</h2>
+        <div id="snake-eyes-container"></div>
     </div>
 
-    <h3>Game Results</h3>
-    <div id="game-result" class="result">Place a bet and choose a game to see results.</div>
+    <div id="hilo" class="game-container">
+        <h2>Hi-Lo</h2>
+        <div id="hilo-container"></div>
+    </div>
 
-    <script src="javascript/gambling.js"></script>
+    <div id="horse-race" class="game-container">
+        <h2>Horse Race</h2>
+        <div id="horse-race-container"></div>
+    </div>
+
+    <div id="blackjack" class="game-container">
+        <h2>Blackjack</h2>
+        <div id="blackjack-container"></div>
+    </div>
+
+    <div id="game-result"></div>
 </body>
 </html>
