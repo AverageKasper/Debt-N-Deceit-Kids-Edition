@@ -6,7 +6,7 @@ const pp_button_2 = document.getElementById('pp_button_2');
 const pp_button_3 = document.getElementById('pp_button_3');
 
 const pickpocket_result = document.getElementById('pickpocket_result');
-const close_button = document.getElementById('close');
+const close_button = document.getElementById('close_pp');
 const pp_modal_pp = document.getElementById('pp-modal');
 
 

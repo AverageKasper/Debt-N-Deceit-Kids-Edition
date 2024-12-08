@@ -1,6 +1,7 @@
 /* html/body height defined here bcs using % and not px shit*/
 html,
 body {
+  background-color: #352929;
   font-family: 'Fira Code', monospace;
   font-display: monospace;
   margin: 0;
@@ -70,6 +71,11 @@ body {
   display: flex;
   flex-direction: column;
   gap: 5%;
+  
+}
+.button-group h3 {
+  color: white;
+
 }
 
 .button {
@@ -80,6 +86,8 @@ body {
   border-radius: 10%;
   cursor: pointer;
   font-size: 100%;
+  padding: 1%;
+  margin: 1%;
 }
 
 .button:hover {

@@ -6,15 +6,20 @@ const player_name_input = document.getElementById('player-name');
 const error_p = document.getElementById('error');
 const button_1 = document.getElementById('button-1');
 const button_2 = document.getElementById('button-2')
-const pp_modal = document.getElementById('pp-modal');
+
 const stat_block = document.getElementById('stat-block')
 const main_buttons_div = document.getElementById('main-buttons');
+
+// Modals
+const pp_modal = document.getElementById('pp-modal');
+const diving_modal = document.getElementById('diving-modal');
 
 // Map init
 let map_point;
 let map = L.map('map', {
     minZoom: 3.5,
-    maxZoom: 3.5
+    maxZoom: 3.5,
+    zoomControl: false
 });
 
 let cartodbAttribution = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="https://carto.com/attribution">CARTO</a>';
@@ -30,7 +35,7 @@ async function update_stats() {
     let player_data = await player_stats.json();
     console.log(player_data);
     stat_block.innerHTML = `<p>Name: ${player_name}<br>Money: ${player_data.money}<br>Debt: ${10000 - player_data.money}<br>
-    Shark: ${player_data.shark} steps behind<br>Inventory: ${player_data.inventory}`
+    Carbon: ${player_data.carbon}<br>Shark: ${player_data.shark} steps behind<br>Inventory: ${player_data.inventory}`
 
 }
 
@@ -46,18 +51,25 @@ async function airport_selection() {
         } else {
             type = 'large_airport'
         }
-        let airport = await fetch(`http://127.0.0.1:4000/sql/fly/${type}`)
-        let airport_data = await airport.json()
-        if (airport_data.latitude_deg && airport_data.longitude_deg) {
-            let latitude = airport_data.latitude_deg;
-            let longitude = airport_data.longitude_deg;
-            map_point = L.marker([latitude, longitude]).addTo(map);
-            map_point.bindPopup(`<b>${airport_data.name}</b>`);
-            console.log(airport_data);
-            next_airports['airport_' + i] = airport_data;
-            console.log(next_airports);
-        } else {
-            console.error(`Airport data for ${type} is missing latitude or longitude`);
+        try {
+            let airport = await fetch(`http://127.0.0.1:4000/sql/fly/${type}`)
+            if (!airport.ok) {
+                throw new Error(`Failed to fetch ${type}: ${airport.statusText}`);
+            }
+            let airport_data = await airport.json()
+            if (airport_data.latitude_deg && airport_data.longitude_deg) {
+                let latitude = airport_data.latitude_deg;
+                let longitude = airport_data.longitude_deg;
+                map_point = L.marker([latitude, longitude]).addTo(map);
+                map_point.bindPopup(`<b>${airport_data.name}</b>`);
+                console.log(airport_data);
+                next_airports['airport_' + i] = airport_data;
+                console.log(next_airports);
+            } else {
+                console.error(`Airport data for ${type} is missing latitude or longitude`);
+            }
+        } catch (error) {
+            console.error(`Error fetching ${type}:`, error);
         }
     }
     return next_airports
@@ -76,10 +88,18 @@ async function small_tasks() {
     const small_button_2 = document.createElement('button')
     small_button_2.textContent = 'Dumpster diving'
     small_button_2.className = 'button'
+    small_button_2.addEventListener('click', async (evt) => {
+        get_diving();
+        diving_modal.style.display = 'block';
+    });
 
     const small_button_3 = document.createElement('button')
     small_button_3.textContent = 'Go to the next airport'
     small_button_3.className = 'button'
+    small_button_3.addEventListener('click', async (evt) => {
+        clear_map();
+        button_to_airport();
+    });
     
     main_buttons_div.appendChild(small_button_1)
     main_buttons_div.appendChild(small_button_2)
@@ -138,8 +158,8 @@ kbButtons.forEach((button) => {
             const start_game_json = await start_game.json();
             console.log(start_game_json);
             start_modal.style.display = 'none';
-            update_stats();
-            button_to_airport();
+            await update_stats();
+            await button_to_airport();
         }
     });
 });

@@ -16,26 +16,40 @@ conn = mysql.connector.connect(
                 )
 
 def initial_setup():
-    with conn.cursor() as cursor:
-        cursor.execute("""
-            CREATE TABLE IF NOT EXISTS player (
-            id SERIAL PRIMARY KEY,
-            player_name VARCHAR(100) NOT NULL,
-            location_id VARCHAR(100) DEFAULT 'Finland',
-            money INT DEFAULT 0,
-            carbon INT DEFAULT 0,
-            shark INT DEFAULT 0,
-            inventory INT DEFAULT 0
-            );
-        """)
-        conn.commit()
+    cursor = None
+    try:
+        with conn.cursor() as cursor:
+            cursor.execute("""
+                CREATE TABLE IF NOT EXISTS player (
+                id SERIAL PRIMARY KEY,
+                player_name VARCHAR(100) NOT NULL,
+                location_id VARCHAR(100) DEFAULT 'Finland',
+                money INT DEFAULT 0,
+                carbon INT DEFAULT 0,
+                shark INT DEFAULT 0,
+                inventory INT DEFAULT 0
+                );
+            """)
+            conn.commit()
+    except mysql.connector.Error as err:
+        print(f"Error: {err}")
+    finally:
+        if cursor:
+            cursor.close()
 
 def create_player(player_name, money, carbon, shark):
-    with conn.cursor() as cursor:
-        cursor.execute("""
-            INSERT INTO player (player_name, money, carbon, shark) VALUES (%s, %s, %s, %s)
-        """, (player_name, money, carbon, shark))
-        conn.commit()
+    cursor = None
+    try:
+        with conn.cursor() as cursor:
+            cursor.execute("""
+                INSERT INTO player (player_name, money, carbon, shark) VALUES (%s, %s, %s, %s)
+            """, (player_name, money, carbon, shark))
+            conn.commit()
+    except mysql.connector.Error as err:
+        print(f"Error: {err}")
+    finally:
+        if cursor:
+            cursor.close()
 
 @sql_blueprint.route('/check_name/<player_name>')
 def check_name(player_name):
@@ -56,65 +70,75 @@ def check_name(player_name):
         if cursor:
             cursor.close()
 
-def get_money(player_name):
-    with conn.cursor() as cursor:
-        cursor.execute("""
-            SELECT money FROM player WHERE player_name = %s
-        """, (player_name,))
-        money = cursor.fetchall()
-        return money[0][0]
-
 def update_money(player_name, money):
-    with conn.cursor() as cursor:
-        cursor.execute("""
-            UPDATE player SET money = %s WHERE player_name = %s
-        """, (money, player_name))
-        conn.commit()
-
-def get_carbon(player_name):
-    with conn.cursor() as cursor:
-        cursor.execute("""
-            SELECT carbon FROM player WHERE player_name = %s
-        """, (player_name,))
-        carbon = cursor.fetchall()
-        return carbon[0][0]
+    cursor = None
+    try:
+        with conn.cursor() as cursor:
+            cursor.execute("""
+                UPDATE player SET money = %s WHERE player_name = %s
+            """, (money, player_name))
+            conn.commit()
+    except mysql.connector.Error as err:
+        print(f"Error: {err}")
+    finally:
+        if cursor:
+            cursor.close()
 
 def update_carbon(player_name, carbon):
-    with conn.cursor() as cursor:
-        cursor.execute("""
-            UPDATE player SET carbon = %s WHERE player_name = %s
-        """, (carbon, player_name))
-        conn.commit()
-
-def get_shark(player_name):
-    with conn.cursor() as cursor:
-        cursor.execute("""
-            SELECT shark FROM player WHERE player_name = %s
-        """, (player_name,))
-        shark = cursor.fetchall()
-        return shark[0][0]
+    cursor = None
+    try:
+        with conn.cursor() as cursor:
+            cursor.execute("""
+                UPDATE player SET carbon = %s WHERE player_name = %s
+            """, (carbon, player_name))
+            conn.commit()
+    except mysql.connector.Error as err:
+        print(f"Error: {err}")
+    finally:
+        if cursor:
+            cursor.close()
     
 def update_shark(player_name, shark):
-    with conn.cursor() as cursor:
-        cursor.execute("""
-            UPDATE player SET shark = %s WHERE player_name = %s
-        """, (shark, player_name))
-        conn.commit()
-
-def get_inventory(player_name):
-    with conn.cursor() as cursor:
-        cursor.execute("""
-            SELECT inventory FROM player WHERE player_name = %s
-        """, (player_name,))
-        inventory = cursor.fetchall()
-        return inventory[0][0]
+    cursor = None
+    try:
+        with conn.cursor() as cursor:
+            cursor.execute("""
+                UPDATE player SET shark = %s WHERE player_name = %s
+            """, (shark, player_name))
+            conn.commit()
+    except mysql.connector.Error as err:
+        print(f"Error: {err}")
+    finally:
+        if cursor:
+            cursor.close()
 
 def update_inventory(player_name, inventory):
-    with conn.cursor() as cursor:
-        cursor.execute("""
-            UPDATE player SET inventory = %s WHERE player_name = %s
-        """, (inventory, player_name))
-        conn.commit()
+    cursor = None
+    try:
+        with conn.cursor() as cursor:
+            cursor.execute("""
+                UPDATE player SET inventory = %s WHERE player_name = %s
+            """, (inventory, player_name))
+            conn.commit()
+    except mysql.connector.Error as err:
+        print(f"Error: {err}")
+    finally:
+        if cursor:
+            cursor.close()
+
+def update_location(player_name, icao):
+    cursor = None
+    try:
+        with conn.cursor() as cursor:
+            cursor.execute("""
+                UPDATE player SET location_id = %s WHERE player_name = %s
+            """, (icao, player_name))
+            conn.commit()
+    except mysql.connector.Error as err:
+        print(f"Error: {err}")
+    finally:
+        if cursor:
+            cursor.close()
 
 @sql_blueprint.route('player_stats/<player_name>')
 def player_stats(player_name):
@@ -172,12 +196,7 @@ def fly(airport_type):
         if cursor:
             cursor.close()  # Explicitly close the cursor
 
-def update_location(player_name, icao):
-    with conn.cursor() as cursor:
-        cursor.execute("""
-            UPDATE player SET location_id = %s WHERE player_name = %s
-        """, (icao, player_name))
-        conn.commit()
+
 
 initial_setup()
 
