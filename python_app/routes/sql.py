@@ -109,6 +109,23 @@ def update_inventory(player_name, inventory):
         """, (inventory, player_name))
         conn.commit()
 
+@sql_blueprint.route('player_stats/<player_name>')
+def player_stats(player_name):
+    with conn.cursor() as cursor:
+        cursor.execute("""
+            SELECT money, carbon, shark, inventory FROM player WHERE player_name = %s
+                       """, (player_name,))
+        stats = cursor.fetchall()
+        if stats:
+            stats_json = {
+                "money": stats[0][0],
+                "carbon": stats[0][1],
+                "shark": stats[0][2],
+                "inventory": stats[0][3]
+            }
+            return jsonify(stats_json)
+        else:
+            return jsonify({"error": "Player not found"}), 404
 
 @sql_blueprint.route('/fly/<airport_type>')
 def fly(airport_type):
