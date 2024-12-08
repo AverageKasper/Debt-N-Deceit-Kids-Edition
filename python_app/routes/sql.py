@@ -78,6 +78,7 @@ def update_money(player_name, money):
                 UPDATE player SET money = %s WHERE player_name = %s
             """, (money, player_name))
             conn.commit()
+            return  
     except mysql.connector.Error as err:
         print(f"Error: {err}")
     finally:
@@ -97,20 +98,24 @@ def update_carbon(player_name, carbon):
     finally:
         if cursor:
             cursor.close()
-    
+
+@sql_blueprint.route('/update_shark/<player_name>/<shark>', methods=['PUT'])
 def update_shark(player_name, shark):
     cursor = None
     try:
         with conn.cursor() as cursor:
             cursor.execute("""
-                UPDATE player SET shark = %s WHERE player_name = %s
+                UPDATE player SET shark = shark + %s WHERE player_name = %s
             """, (shark, player_name))
             conn.commit()
+            json = {"message": "Shark updated"}
+            return jsonify(json)
     except mysql.connector.Error as err:
         print(f"Error: {err}")
     finally:
         if cursor:
             cursor.close()
+            
 
 def update_inventory(player_name, inventory):
     cursor = None

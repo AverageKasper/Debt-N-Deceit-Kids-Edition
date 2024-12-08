@@ -10,7 +10,7 @@ async function get_diving() {
     console.log(data);
     diving_text.innerText = data.text;
     diving_reward.innerText = 'You got ' + data.reward;
-    update_stats();
+    await update_stats();
 }
 
 close_diving.addEventListener('click', async (evt) => {

@@ -81,7 +81,8 @@ async function small_tasks() {
     small_button_1.textContent = 'Pickpocketing'
     small_button_1.className = 'button'
     small_button_1.addEventListener('click', async (evt) => {
-        pp_init();
+        await pp_init();
+        await shark_moving(player_name_input.value, -1);
         pp_modal.style.display = 'block';
     });
 
@@ -89,7 +90,8 @@ async function small_tasks() {
     small_button_2.textContent = 'Dumpster diving'
     small_button_2.className = 'button'
     small_button_2.addEventListener('click', async (evt) => {
-        get_diving();
+        await get_diving();
+        await shark_moving(player_name_input.value, -1);
         diving_modal.style.display = 'block';
     });
 
@@ -116,18 +118,25 @@ async function button_to_airport() {
     airport_1_button.className = 'button'
     airport_1_button.addEventListener('click', async (evt) => {
         small_tasks();
+        await shark_moving(player_name_input.value, 1);
+        await update_stats();
+        
     })
     const airport_2_button = document.createElement('button')
     airport_2_button.textContent = airport_list.airport_2.name
     airport_2_button.className = 'button'
     airport_2_button.addEventListener('click', async (evt) => {
         console.log('2 clicked')
+        await shark_moving(player_name_input.value, 1);
+        await update_stats();
     })
     const airport_3_button = document.createElement('button')
     airport_3_button.textContent = airport_list.airport_3.name
     airport_3_button.className = 'button'
     airport_3_button.addEventListener('click', async (evt) => {
         console.log('3 clicked')
+        await shark_moving(player_name_input.value, 1);
+        await update_stats();
     })
     main_buttons_div.appendChild(airport_1_button)
     main_buttons_div.appendChild(airport_2_button)
@@ -173,9 +182,3 @@ map.scrollWheelZoom.disable();
 map.boxZoom.disable();
 map.keyboard.disable();
 if (map.tap) map.tap.disable();
-
-
-button_2.addEventListener('click', async (evt) => {
-    clear_map()
-    airport_selection();
-});
