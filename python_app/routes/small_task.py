@@ -82,7 +82,7 @@ def calculate_pickpocket(name, difficulty):
     return jsonify(result)
 
 # Function for dumpster diving at small airports, returns gained currencies
-@small_blueprint.route('/dive')
+@small_blueprint.route('/diving')
 def dumpster_dive():
 
     # Randomizes percentage 
@@ -116,17 +116,18 @@ def dumpster_dive():
         inventory += 1
     
     # Check what reward was got and update class stats accordingly
+    from python_app.player_class import player
     if money > 0:
         reward = f"{money} €"
-        #!#player.update_balance(money)
+        player.update_balance(money)
     elif carbon > 0:
         reward = f"{carbon} carbon"
-        #!#player.update_carbon(carbon)
+        player.update_carbon(carbon)
     elif inventory > 0:
         reward = f"{inventory} items"
-        #!#player.update_inventory(inventory)
+        player.update_inventory(inventory)
     else: 
-        reward = "Nothing"
+        reward = "nothing"
     
     result = {"text": text_result,
               "reward": reward}
