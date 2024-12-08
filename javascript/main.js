@@ -34,6 +34,7 @@ async function update_stats() {
 
 }
 
+// fix this shit i have no idea why this works
 async function airport_selection() {
     let next_airports = {}
     for (let i = 1; i < 4; i++) {
@@ -47,14 +48,44 @@ async function airport_selection() {
         }
         let airport = await fetch(`http://127.0.0.1:4000/sql/fly/${type}`)
         let airport_data = await airport.json()
-        map_point = L.marker([airport_data.latitude_deg, airport_data.longitude_deg]).addTo(map);
-        map_point.bindPopup(`<b>${airport_data.name}</b>`)
-        console.log(airport_data)
-        next_airports['airport_' + i] = airport_data
-        console.log(next_airports)
+        if (airport_data.latitude_deg && airport_data.longitude_deg) {
+            let latitude = airport_data.latitude_deg;
+            let longitude = airport_data.longitude_deg;
+            map_point = L.marker([latitude, longitude]).addTo(map);
+            map_point.bindPopup(`<b>${airport_data.name}</b>`);
+            console.log(airport_data);
+            next_airports['airport_' + i] = airport_data;
+            console.log(next_airports);
+        } else {
+            console.error(`Airport data for ${type} is missing latitude or longitude`);
+        }
     }
     return next_airports
 }
+
+async function small_tasks() {
+    main_buttons_div.innerHTML = '';
+    const small_button_1 = document.createElement('button')
+    small_button_1.textContent = 'Pickpocketing'
+    small_button_1.className = 'button'
+    small_button_1.addEventListener('click', async (evt) => {
+        pp_init();
+        pp_modal.style.display = 'block';
+    });
+
+    const small_button_2 = document.createElement('button')
+    small_button_2.textContent = 'Dumpster diving'
+    small_button_2.className = 'button'
+
+    const small_button_3 = document.createElement('button')
+    small_button_3.textContent = 'Go to the next airport'
+    small_button_3.className = 'button'
+    
+    main_buttons_div.appendChild(small_button_1)
+    main_buttons_div.appendChild(small_button_2)
+    main_buttons_div.appendChild(small_button_3)
+}
+
 
 async function button_to_airport() {
     main_buttons_div.innerHTML = '';
@@ -64,7 +95,7 @@ async function button_to_airport() {
     airport_1_button.textContent = airport_list.airport_1.name
     airport_1_button.className = 'button'
     airport_1_button.addEventListener('click', async (evt) => {
-        console.log('1 clicked')
+        small_tasks();
     })
     const airport_2_button = document.createElement('button')
     airport_2_button.textContent = airport_list.airport_2.name
@@ -123,31 +154,6 @@ map.boxZoom.disable();
 map.keyboard.disable();
 if (map.tap) map.tap.disable();
 
-button_1.addEventListener('click', async (evt) => {
-    const result = await fetch('http://127.0.0.1:4000/small/pp/victims_list')
-    const data = await result.json()
-    console.log(data);
-
-    pp_button_1.style.display = '';
-    pp_button_1.innerHTML = `Victim 1:${data[0].victim_1.name}<br>Difficulty:${data[0].victim_1.difficulty}`;
-    pp_button_1.name = data[0].victim_1.name;
-    pp_button_1.value = data[0].victim_1.difficulty;
-
-    pp_button_2.style.display = '';
-    pp_button_2.innerHTML = `Victim 2:${data[0].victim_2.name}<br>Difficulty:${data[0].victim_2.difficulty}`;
-    pp_button_2.name = data[0].victim_2.name;
-    pp_button_2.value = data[0].victim_2.difficulty;
-
-    pp_button_3.style.display = '';
-    pp_button_3.innerHTML = `Victim 3:${data[0].victim_3.name}<br>Difficulty:${data[0].victim_3.difficulty}`;
-    pp_button_3.name = data[0].victim_3.name;
-    pp_button_3.value = data[0].victim_3.difficulty;
-
-
-
-
-    pp_modal.style.display = 'block';
-});
 
 button_2.addEventListener('click', async (evt) => {
     clear_map()

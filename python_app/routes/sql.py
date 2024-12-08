@@ -39,15 +39,22 @@ def create_player(player_name, money, carbon, shark):
 
 @sql_blueprint.route('/check_name/<player_name>')
 def check_name(player_name):
-    with conn.cursor() as cursor:
-        cursor.execute("""
-            SELECT player_name FROM player WHERE player_name = %s
-        """, (player_name,))
-        name = cursor.fetchall()
-        if cursor.rowcount > 0:
-            return jsonify({"exists": True})
-        else:
-            return jsonify({"exists": False})
+    cursor = None
+    try:
+        with conn.cursor() as cursor:
+            cursor.execute("""
+                SELECT player_name FROM player WHERE player_name = %s
+            """, (player_name,))
+            name = cursor.fetchone()
+            if name:
+                return jsonify({"exists": True})
+            else:
+                return jsonify({"exists": False})
+    except mysql.connector.Error as err:
+        return jsonify({"error": str(err)}), 500
+    finally:
+        if cursor:
+            cursor.close()
 
 def get_money(player_name):
     with conn.cursor() as cursor:
@@ -111,29 +118,42 @@ def update_inventory(player_name, inventory):
 
 @sql_blueprint.route('player_stats/<player_name>')
 def player_stats(player_name):
-    with conn.cursor() as cursor:
-        cursor.execute("""
-            SELECT money, carbon, shark, inventory FROM player WHERE player_name = %s
-                       """, (player_name,))
-        stats = cursor.fetchall()
-        if stats:
-            stats_json = {
-                "money": stats[0][0],
-                "carbon": stats[0][1],
-                "shark": stats[0][2],
-                "inventory": stats[0][3]
-            }
-            return jsonify(stats_json)
-        else:
-            return jsonify({"error": "Player not found"}), 404
+    cursor = None
+    try:
+        with conn.cursor() as cursor:
+            cursor.execute("""
+                SELECT money, carbon, shark, inventory FROM player WHERE player_name = %s
+                        """, (player_name,))
+            stats = cursor.fetchall()
+            if stats:
+                stats_json = {
+                    "money": stats[0][0],
+                    "carbon": stats[0][1],
+                    "shark": stats[0][2],
+                    "inventory": stats[0][3]
+                }
+                return jsonify(stats_json)
+            else:
+                return jsonify({"error": "Player not found"}), 404
+    except mysql.connector.Error as err:
+        return jsonify({"error": str(err)}), 500
+    finally:
+        if cursor:
+            cursor.close()
 
 @sql_blueprint.route('/fly/<airport_type>')
 def fly(airport_type):
-    with conn.cursor() as cursor:
+    cursor = None
+    try:
+        cursor = conn.cursor()
         cursor.execute("""
-            SELECT name, iso_country, type, ident, latitude_deg, longitude_deg FROM airport where continent = 'EU' and type = %s and name not like '%?%' ORDER BY RAND() LIMIT 1;
+            SELECT name, iso_country, type, ident, latitude_deg, longitude_deg 
+            FROM airport 
+            WHERE continent = 'EU' AND type = %s AND name NOT LIKE '%?%' 
+            ORDER BY RAND() LIMIT 1;
         """, (airport_type,))
-        location = cursor.fetchone()
+        location = cursor.fetchone()  # Use fetchone() for a single row
+        
         if location:
             location_data = {
                 "name": location[0],
@@ -146,6 +166,11 @@ def fly(airport_type):
             return jsonify(location_data)
         else:
             return jsonify({"error": "No airport found"}), 404
+    except mysql.connector.Error as err:
+        return jsonify({"error": str(err)}), 500
+    finally:
+        if cursor:
+            cursor.close()  # Explicitly close the cursor
 
 def update_location(player_name, icao):
     with conn.cursor() as cursor:
