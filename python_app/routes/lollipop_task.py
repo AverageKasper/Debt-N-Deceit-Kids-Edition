@@ -10,6 +10,7 @@ lollipop_blueprint = Blueprint('lollipop', __name__)
 # Turn-based combat function
 @lollipop_blueprint.route('/start_fight', methods=['GET'])
 def start_fighting():
+    from python_app.player_class import player
     try:
         salvia_mode = request.args.get('salvia_mode', 'false').lower() == 'true'
         player_lost = False
@@ -69,6 +70,7 @@ def start_fighting():
 # Ringpop Route
 @lollipop_blueprint.route('/ring_pop', methods=['GET'])
 def ring_pop():
+    from python_app.player_class import player
     random_bucks = random.randint(1, 1500)
     player.update_balance(random_bucks)
     return jsonify({"status": "success", "message": f"You got {random_bucks}€", "balance": player.get_balance()})
@@ -77,6 +79,7 @@ def ring_pop():
 # Moomin Route
 @lollipop_blueprint.route('/moomin', methods=['GET'])
 def suck_moomin():
+    from python_app.player_class import player
     player_lost = start_fighting()
     if player_lost:
         player.death("Lost due to losing a fight over sucking a lollipop")
@@ -87,6 +90,7 @@ def suck_moomin():
 # Jolly Rancher Route
 @lollipop_blueprint.route('/jolly', methods=['GET'])
 def suck_jolly():
+    from python_app.player_class import player
     random_money = random.randint(100, 300)
     player.update_balance(random_money)
     return jsonify({"status": "success", "message": f"You got {random_money}€", "balance": player.get_balance()})
@@ -95,6 +99,7 @@ def suck_jolly():
 # John Player Route
 @lollipop_blueprint.route('/john_player', methods=['GET'])
 def suck_john():
+    from python_app.player_class import player
     random_outcome = random.choice(['good', 'bad'])
     if random_outcome == 'bad':
         player.death("Lost while sucking in a back alley")
@@ -105,6 +110,7 @@ def suck_john():
 # Salvia Route
 @lollipop_blueprint.route('/salvia', methods=['GET'])
 def suck_salvia():
+    from python_app.player_class import player
     player_lost = start_fighting(salvia_mode=True)
     if player_lost:
         player.death("Lost while being sugar high")
@@ -115,6 +121,7 @@ def suck_salvia():
 # ChupaChups Route
 @lollipop_blueprint.route('/chupa', methods=['GET'])
 def suck_chupa():
+    from python_app.player_class import player
     black_money = random.randint(500, 1000)
     player.update_balance(-black_money)
     return jsonify({"status": "fail", "message": f"You lost {black_money}€", "balance": player.get_balance()})
@@ -123,6 +130,7 @@ def suck_chupa():
 # Lollipop Selector Route
 @lollipop_blueprint.route('/select', methods=['POST'])
 def lollipop_action():
+    from python_app.player_class import player
     try:
         data = request.json
         lollipop_choice = data.get('lollipop', '').upper()
