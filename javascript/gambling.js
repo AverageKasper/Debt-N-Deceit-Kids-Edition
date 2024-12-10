@@ -124,10 +124,17 @@ function initBlackjack() {
     document.getElementById('blackjack-container').innerHTML = `
         <button id="blackjack-start">Start Blackjack</button>
         <div id="blackjack-result"></div>
+        <div id="blackjack-actions" style="display: none;">
+            <button id="blackjack-hit">Hit</button>
+            <button id="blackjack-stand">Stand</button>
+        </div>
     `;
 
+    const blackjackResult = document.getElementById('blackjack-result');
+    const blackjackActions = document.getElementById('blackjack-actions');
+
     document.getElementById('blackjack-start').onclick = () => {
-        const betAmount = parseFloat(betInput.value);
+        const betAmount = parseFloat(document.getElementById('bet').value);
 
         if (isNaN(betAmount) || betAmount <= 0) {
             alert('Please enter a valid bet amount.');
@@ -144,20 +151,63 @@ function initBlackjack() {
             if (data.error) {
                 alert(data.error);
             } else {
-                const blackjackResult = document.getElementById('blackjack-result');
-                blackjackResult.textContent = data.message;
-
+                console.log("Start Response:", data);  // Debug response
                 blackjackResult.innerHTML = `
                     <p>Your hand: ${data.player_hand.join(', ')}</p>
                     <p>Dealer's hand: ${data.dealer_hand.join(', ')}</p>
                 `;
+                blackjackActions.style.display = 'block';
+                blackjackActions.dataset.gameId = data.game_id;
             }
         })
-        .catch(error => {
-            console.error('Error starting Blackjack:', error);
-        });
+        .catch(error => console.error('Error starting Blackjack:', error));
+    };
+
+    document.getElementById('blackjack-hit').onclick = () => {
+        const gameId = blackjackActions.dataset.gameId;
+        console.log("Game ID:", blackjackActions.dataset.gameId); // Add this to the Hit and Stand button click handlers
+
+        fetch('http://localhost:4000/casino/blackjack/play', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ game_id: gameId, action: 'hit' })
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log("Hit Response:", data);  // Debug response
+            blackjackResult.innerHTML = `
+                <p>Your hand: ${data.player_hand.join(', ')}</p>
+                <p>Dealer's hand: ${data.dealer_hand.join(', ')}</p>
+                <p>${data.result || data.message}</p>
+            `;
+            if (data.finished) blackjackActions.style.display = 'none';
+        })
+        .catch(error => console.error('Error hitting in Blackjack:', error));
+    };
+
+    document.getElementById('blackjack-stand').onclick = () => {
+        const gameId = blackjackActions.dataset.gameId;
+        console.log("Game ID:", blackjackActions.dataset.gameId); // Add this to the Hit and Stand button click handlers
+
+        fetch('http://localhost:4000/casino/blackjack/play', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ game_id: gameId, action: 'stand' })
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log("Stand Response:", data);  // Debug response
+            blackjackResult.innerHTML = `
+                <p>Your hand: ${data.player_hand.join(', ')}</p>
+                <p>Dealer's hand: ${data.dealer_hand.join(', ')}</p>
+                <p>${data.result}</p>
+            `;
+            blackjackActions.style.display = 'none';
+        })
+        .catch(error => console.error('Error standing in Blackjack:', error));
     };
 }
+
 
 // Initialize balance on page load
 getBalance();
