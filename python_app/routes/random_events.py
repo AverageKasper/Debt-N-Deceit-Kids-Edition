@@ -1,6 +1,6 @@
 import random as r
 from flask import Blueprint, jsonify
-from python_app.player_class import player
+
 
 random_blueprint = Blueprint('random', __name__)
 
@@ -18,6 +18,7 @@ event_list = ["Sausage",
 
 @random_blueprint.route('/event')
 def random_event():
+    from python_app.player_class import player
     money = 0
     carbon = 0
     shark = 0

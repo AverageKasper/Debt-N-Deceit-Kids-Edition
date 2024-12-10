@@ -3,12 +3,14 @@ import random as r
 from flask import Blueprint, jsonify, request
 
 from python_app.player_class import create_player_object
+from python_app.routes.sql import initial_setup
 
 
 start_blueprint = Blueprint('start', __name__)
 
 @start_blueprint.route('/start_game/<player_name>/<difficulty>')
 def start_game(player_name, difficulty):
+    initial_setup()
     easy_dif = [2500, 10000, 7]
     medium_dif = [1000, 7500, 5]
     hard_diff = [100, 5000, 3]
@@ -22,6 +24,7 @@ def start_game(player_name, difficulty):
 
     # Player object, has a name, money, carbon, shark, inventory, airport_name, airport_country, airport_type as attributes
     create_player_object(player_name, money, carbon, shark, 0, "Helsinki-Vantaa", "Finland", "large_airport")
+    return jsonify({"monke": "monke"})
     
 
 

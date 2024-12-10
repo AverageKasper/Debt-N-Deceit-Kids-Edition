@@ -1,7 +1,7 @@
 import random as r
 from flask import Blueprint, jsonify
 
-from python_app.player_class import player
+
 
 small_blueprint = Blueprint('small', __name__)
 
@@ -57,6 +57,7 @@ def pickpocket_victims():
 # Handles the pickpocketing choice and chance
 @small_blueprint.route('/pp/<name>/<difficulty>')
 def calculate_pickpocket(name, difficulty):
+    from python_app.player_class import player
     result = {}
     difficulties= {"★": 10,
                    "★★": 30,
@@ -71,17 +72,17 @@ def calculate_pickpocket(name, difficulty):
                 win_money = r.randint(5,15) * difficulties[difficulty]
                 result = {"message": f"Success! You successfully pickpocketed {name} and earned {win_money}€.",
                           "money": win_money}
-                #!#player.update_balance(win_money)
+                player.update_balance(win_money)
                 
             else:
                 lose_money = r.randint(1,5) * difficulties[difficulty]
                 result = {"message": f"Failure! You got caught trying to pickpocket {name}. You got fined for {lose_money}€.",
                           "money": lose_money}
-                #!#player.update_balance(-lose_money)
+                player.update_balance(-lose_money)
     return jsonify(result)
 
 # Function for dumpster diving at small airports, returns gained currencies
-@small_blueprint.route('/dive')
+@small_blueprint.route('/diving')
 def dumpster_dive():
 
     # Randomizes percentage 
@@ -115,17 +116,18 @@ def dumpster_dive():
         inventory += 1
     
     # Check what reward was got and update class stats accordingly
+    from python_app.player_class import player
     if money > 0:
         reward = f"{money} €"
-        #!#player.update_balance(money)
+        player.update_balance(money)
     elif carbon > 0:
         reward = f"{carbon} carbon"
-        #!#player.update_carbon(carbon)
+        player.update_carbon(carbon)
     elif inventory > 0:
         reward = f"{inventory} items"
-        #!#player.update_inventory(inventory)
+        player.update_inventory(inventory)
     else: 
-        reward = "Nothing"
+        reward = "nothing"
     
     result = {"text": text_result,
               "reward": reward}

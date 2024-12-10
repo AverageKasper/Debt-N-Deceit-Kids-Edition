@@ -4,6 +4,7 @@ from python_app.routes.task import task_blueprint
 from python_app.routes.sql import sql_blueprint
 from python_app.routes.random_events import random_blueprint
 from python_app.routes.medium_task import medium_blueprint
+from python_app.routes.casino_blue import casino_blueprint
 
 
 def register_blueprints(app):
@@ -13,3 +14,4 @@ def register_blueprints(app):
     app.register_blueprint(sql_blueprint, url_prefix='/sql')
     app.register_blueprint(random_blueprint, url_prefix='/random')
     app.register_blueprint(medium_blueprint, url_prefix='/medium')
+    app.register_blueprint(casino_blueprint, url_prefix='/casino')

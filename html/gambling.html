@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gambling Games</title>
+    <link rel="stylesheet" href="css/gambling.css">
+    <script src="../javascript/gambling.js" defer></script>
+</head>
+<body>
+    <h1>Gambling Games</h1>
+    <p>Current Balance: <span id="balance">Loading...</span></p>
+    <label for="bet">Enter your bet:</label>
+    <input type="number" id="bet" placeholder="Enter your bet">
+
+    <div id="game-buttons">
+        <button onclick="showGame('snake-eyes')">Play Snake Eyes</button>
+        <button onclick="showGame('hilo')">Play Hi-Lo</button>
+        <button onclick="showGame('horse-race')">Play Horse Race</button>
+        <button onclick="showGame('blackjack')">Play Blackjack</button>
+    </div>
+
+    <div id="snake-eyes" class="game-container">
+        <h2>Snake Eyes</h2>
+        <div id="snake-eyes-container"></div>
+    </div>
+
+    <div id="hilo" class="game-container">
+        <h2>Hi-Lo</h2>
+        <div id="hilo-container"></div>
+    </div>
+
+    <div id="horse-race" class="game-container">
+        <h2>Horse Race</h2>
+        <div id="horse-race-container"></div>
+    </div>
+
+    <div id="blackjack" class="game-container">
+        <h2>Blackjack</h2>
+        <div id="blackjack-container"></div>
+    </div>
+
+    <div id="game-result" style="margin-top: 20px; font-weight: bold;"></div>
+</body>
+</html>

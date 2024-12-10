@@ -1,0 +1,171 @@
+/* html/body height defined here bcs using % and not px shit*/
+html,
+body {
+  background-color: #352929;
+  font-family: 'Fira Code', monospace;
+  font-display: monospace;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* container välit ja näytön Reset container spacing and ensure it fills the screen */
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 2%;
+  height: 100%;
+  /* Ensures it fills the screen */
+  box-sizing: border-box;
+  /* Prevents padding/margin from affecting overall size */
+}
+
+.map {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 1%;
+  height: auto;
+  box-sizing: content-box;
+  color: #199eca;
+
+}
+
+/* Header with proportional height */
+.header {
+  width: 80%;
+  height: 10%;
+  /* Relative to container */
+  background-color: #4CAF50;
+  text-align: center;
+  line-height: 10%;
+  /* Aligns text vertically */
+  color: white;
+  margin-bottom: 2%;
+}
+
+/* Content area fixes */
+.content-area {
+  display: flex;
+  width: 80%;
+  height: 80%;
+  /* Uses the remaining space */
+  gap: 2%;
+}
+
+/* Main box flexes properly */
+.main-box {
+  flex: 3;
+  background-color: #f1f1f1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1% solid #ccc;
+}
+
+/* Buttons are responsive with fixed proportions */
+.button-group {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 5%;
+  
+}
+.button-group h3 {
+  color: white;
+
+}
+
+.button {
+  flex-grow: 1;
+  background-color: #008CBA;
+  color: white;
+  border: none;
+  border-radius: 10%;
+  cursor: pointer;
+  font-size: 100%;
+  padding: 1%;
+  margin: 1%;
+}
+
+.button:hover {
+  background-color: #005f73;
+}
+.stat-block {
+  display: flex;
+  flex-direction: column;
+
+
+  box-sizing: content-box;
+  color: #199eca;
+}
+.stat-block p {
+  margin: 0;
+  padding: 0;
+}
+.start-modal {
+  display: block;
+  /* Hidden by default */
+  position: fixed;
+  /* Stay in place */
+  z-index: 1;
+  /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%;
+  /* Full width */
+  height: 100%;
+  /* Full height */
+  overflow: auto;
+  /* Enable scroll if needed */
+  background-color: rgb(0, 0, 0);
+  /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.4);
+  /* Black w/ opacity */
+  z-index: 2;
+}
+
+.modal-content {
+  background-color: #c0bebe;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  padding: 2rem;
+  border-radius: 1rem;
+  text-align: center;
+}
+
+#map {
+  height: 100%;
+  width: 100%;
+  z-index: 1;
+}
+.modal {
+  display: none;
+  /* Hidden by default */
+  position: fixed;
+  /* Stay in place */
+  z-index: 1;
+  /* Sit on top */
+  padding-top: 100px;
+  /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%;
+  /* Full width */
+  height: 100%;
+  /* Full height */
+  overflow: auto;
+  /* Enable scroll if needed */
+  background-color: rgb(0, 0, 0);
+  /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.4);
+  /* Black w/ opacity */
+}
+
+.stat-block p {
+  font-size: medium;
+}
