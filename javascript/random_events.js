@@ -11,20 +11,17 @@ const random_image = document.getElementById('random_image');
 async function random_event() {
     close_random.style.display = 'block';
     let random_chance = Math.floor(Math.random() * 5) + 1;
-    console.log(random_chance)
     if (random_chance !== 5) {
         return {'event': false}
     } else {
         const event_select = await fetch('http://127.0.0.1:4000/random/event');
         const event_json = await event_select.json();
         if (event_json.event == false) {
-            console.log('no event')
             return {'event': false}
         } else if (event_json.event_type == 'morpheus') {
             close_random.style.display = 'none';
             morpheus(event_json);
         }
-        console.log(event_json);
         
         event_modal.style.display = 'block';
         event_text.innerText = event_json.text;
@@ -73,7 +70,6 @@ async function pill_taking() {
     red_pill.className = 'button';
     blue_pill.className = 'button';
     close_random.style.display = 'none';
-    console.log(result_json);
     event_buttons.removeChild(event_buttons.lastChild);
     event_buttons.removeChild(event_buttons.lastChild);
     event_buttons.appendChild(red_pill);
@@ -93,3 +89,8 @@ async function pill_taking() {
         }
     });
 }
+
+async function shark_gets_hit(name_player) {
+    event_text.innerText = 'You hit the shark with a magical object, he is transported back 3 airports!'
+    shark_moving(name_player, -3)
+} 

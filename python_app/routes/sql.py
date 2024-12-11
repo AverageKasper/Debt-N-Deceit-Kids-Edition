@@ -151,7 +151,7 @@ def player_stats(player_name):
     try:
         with conn.cursor() as cursor:
             cursor.execute("""
-                SELECT money, carbon, shark, inventory FROM player WHERE player_name = %s
+                SELECT money, carbon, shark, inventory, player_name FROM player WHERE player_name = %s
                         """, (player_name,))
             stats = cursor.fetchall()
             if stats:
@@ -159,7 +159,8 @@ def player_stats(player_name):
                     "money": stats[0][0],
                     "carbon": stats[0][1],
                     "shark": stats[0][2],
-                    "inventory": stats[0][3]
+                    "inventory": stats[0][3],
+                    "name": stats[0][4]
                 }
                 return jsonify(stats_json)
             else:

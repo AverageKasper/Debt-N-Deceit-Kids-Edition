@@ -7,7 +7,6 @@ const diving_reward = document.getElementById('diving_reward');
 async function get_diving() {
     let response = await fetch('http://127.0.0.1:4000/small/diving');
     let data = await response.json();
-    console.log(data);
     diving_text.innerText = data.text;
     diving_reward.innerText = 'You got ' + data.reward;
     await update_stats();

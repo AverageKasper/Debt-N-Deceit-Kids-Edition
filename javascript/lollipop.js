@@ -24,7 +24,6 @@ async function getData(url) {
     try {
         const response = await fetch(url);
         const data = await response.json();
-        console.log('Response from API:', data);
         return data;
     } catch (error) {
         console.error('Error fetching data from API:', error);
@@ -43,7 +42,6 @@ async function postData(url, data) {
             body: JSON.stringify(data)
         });
         const result = await response.json();
-        console.log('Response from API:', result);
         return result;
     } catch (error) {
         console.error('Error posting data to API:', error);
