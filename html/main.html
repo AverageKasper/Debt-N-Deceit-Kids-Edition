@@ -95,10 +95,10 @@
 
                     <div id="hilo" class="gg-modal">
                         <div class="gambling-game-content">
-                            <button class="button close-hilo"id="hilo">Close Game</button>
+                            <button class="button close-hilo" id="hilo">Close Game</button>
                             <h2>Hi-Lo</h2>
                             <div id="hilo-container"></div>
-                            
+
                         </div>
                     </div>
 
@@ -150,6 +150,42 @@
             <h3 id="diving_reward"></h3>
             <button id="close_diving" class="button">Close</button>
             <script defer src="../javascript/diving.js"></script>
+        </div>
+    </div>
+    <div id="trivia-modal" class="modal">
+        <div class="modal-content">
+            <div class="trivia-intro">
+                <h1>Welcome to Trivia!</h1>
+                <h3>Answer the question correctly to win money</h3>
+                <h3>Pick a category</h3>
+                <button id="trivia-category" class="button" name="9">General Knowledge</button>
+                <button id="trivia-category" class="button" name="18">Computer Science</button>
+                <button id="trivia-category" class="button" name="15">Video Games</button>
+                <button id="trivia-category" class="button" name="21">Sport</button>
+                <p id="loading"></p>
+            </div>
+            <div>
+                <h3 id="trivia-question"></h3>
+            </div>
+            <div class="trivia-questions">
+
+                <button id="trivia-button" class="button"></button>
+                <button id="trivia-button" class="button"></button>
+                <button id="trivia-button" class="button"></button>
+                <button id="trivia-button" class="button"></button>
+            </div>
+
+            <div id="trivia-result" class="trivia-modal-content">
+                <h3 id="trivia-result-text"></h3>
+                <button id="trivia-continue" class="button">Continue</button>
+            </div>
+            <script defer src="../javascript/trivia.js"></script>
+        </div>
+    </div>
+    <div id="trivia-end-result-modal" class="modal">
+        <div id="trivia-end-result" class="trivia-end-modal-content">
+            <h3 id="trivia-end-result-text"></h3>
+            <button id="close-trivia" class="button">Close</button>
         </div>
     </div>
     <div id="random-modal" class="modal">
