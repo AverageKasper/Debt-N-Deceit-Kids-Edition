@@ -99,7 +99,7 @@ def update_carbon(player_name, carbon):
         if cursor:
             cursor.close()
 
-@sql_blueprint.route('/update_shark/<player_name>/<shark>', methods=['PUT'])
+@sql_blueprint.route('/update_shark/<player_name>/<shark>', methods=['POST'])
 def update_shark(player_name, shark):
     cursor = None
     try:
@@ -169,6 +169,29 @@ def player_stats(player_name):
     finally:
         if cursor:
             cursor.close()
+
+@sql_blueprint.route('/leaderboard')
+def leaderboard():
+    cursor = None
+    try:
+        with conn.cursor() as cursor:
+            cursor.execute("""
+                SELECT player_name, money FROM player ORDER BY money DESC LIMIT 5
+            """)
+            leaderboard = cursor.fetchall()
+            leaderboard_list = []
+            for player in leaderboard:
+                leaderboard_list.append({
+                    "player_name": player[0],
+                    "money": player[1]
+                })
+            return jsonify(leaderboard_list)
+    except mysql.connector.Error as err:
+        return jsonify({"error": str(err)}), 500
+    finally:
+        if cursor:
+            cursor.close()
+
 
 @sql_blueprint.route('/fly/<airport_type>')
 def fly(airport_type):

@@ -2,30 +2,62 @@ import random as r
 from flask import Blueprint, jsonify, request, session, Flask
 from python_app.player_class import create_player_object
 
-casino_blueprint=Blueprint('casino', __name__)
+casino_blueprint = Blueprint('casino', __name__)
+
 
 @casino_blueprint.route('/menu', methods=['GET'])
 def casino_menu():
-
-
     create_player_object('test', 1000, 100, 0, 0, 'Helsinki-Vantaa', 'Finland', 'large_airport')
     from python_app.player_class import player
-    
+
     try:
-        if player.balance<=0:
-            return jsonify ({
-                "message":"You don't have any money. Please add funs to play",
+        if player.balance <= 0:
+            return jsonify({
+                "message": "You don't have any money. Please add funs to play",
                 "balance": player.balance
             }), 400
 
-        games=["SNAKE EYES", "HILO", "BLACKJACK", "HORSE RACING"]
+        games = ["SNAKE EYES", "HILO", "BLACKJACK", "HORSE RACING"]
         return jsonify({
-            "message":"Welcome to the casino! Choose a game to play",
-            "games":games,
+            "message": "Welcome to the casino! Choose a game to play",
+            "games": games,
             "balance": player.balance
         }), 200
     except Exception as e:
-        return jsonify({"error":str(e)}), 500
+        return jsonify({"error": str(e)}), 500
+
+
+@casino_blueprint.route('/horse_race/start', methods=['POST'])
+def horse_race_start():
+    from python_app.player_class import player
+    try:
+        data = request.json
+        bet = data.get("bet", 0)
+
+        # Validate the bet
+        if not isinstance(bet, (int, float)) or bet <= 0:
+            return jsonify({"error": "Invalid bet amount"}), 400
+
+        error = player.validate_bet(bet)
+        if error:
+            return jsonify({"error": error}), 400
+
+        # Define the horses
+        horses = ["Diddy", "Kolovastaava", "Sakke", "Rinne", "Uusitalo"]
+
+        # Generate odds for each horse
+        odds = {horse: round(r.uniform(1.5, 5.0), 2) for horse in horses}
+
+        return jsonify({
+            "horses": horses,
+            "odds": odds,
+            "bet": bet,
+            "message": "Place your bet by selecting a horse."
+        })
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
 
 @casino_blueprint.route('/horse_race', methods=['POST'])
 def horse_race():
@@ -42,13 +74,16 @@ def horse_race():
         if bet_horse.capitalize() not in horses:
             return jsonify({"error": "Invalid horse. Please choose from the list."}), 400
 
-        # Retrieve and validate the bet using the `validate_bet` method
+        # Retrieve and validate the bet
         bet = data.get("bet", 0)
-        error = player.validate_bet(bet)  # Call the method
-        if error:
-            return jsonify(error), 400  # Respond with the validation error
+        if not isinstance(bet, (int, float)) or bet <= 0:
+            return jsonify({"error": "Invalid bet amount"}), 400
 
-        # Generate odds and simulate the race
+        error = player.validate_bet(bet)
+        if error:
+            return jsonify({"error": error}), 400
+
+        # Generate race results and calculate odds
         odds = {horse: r.uniform(1.5, 5.0) for horse in horses}
         horse_speeds = {horse: r.randint(10, 20) for horse in horses}
         race_results = sorted(horse_speeds.items(), key=lambda x: x[1], reverse=True)
@@ -57,31 +92,33 @@ def horse_race():
         result_message = f"The winner is {winner}!"
 
         # Check if the player won
+        winnings = 0
         if bet_horse.capitalize() == winner:
             winnings = bet * odds[bet_horse.capitalize()]
-            result_message += f" Congratulations! You won {winnings:.0f} euros!"
+            result_message += f" Congratulations! You won {winnings:.2f}€."
             player.update_balance(winnings)
         else:
-            result_message += f" You lost {bet} euros."
+            result_message += f" You lost {bet:.2f}€."
             player.update_balance(-bet)
 
         # Return the race results and player's updated balance
         return jsonify({
-            "result": result_message,
+            "message": result_message,
             "player_balance": player.balance,
             "race_results": {horse: speed for horse, speed in race_results},
-            "odds": {horse: odds[horse] for horse in horses}
+            "odds": {horse: round(odds[horse], 2) for horse in horses}
         })
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
 
-#Blackjack
+# Blackjack
 
 def deal_card():
     cards = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A']
     return r.choice(cards)
+
 
 def calculate_hand(hand):
     card_values = {
@@ -104,7 +141,7 @@ def start_blackjack():
     from python_app.player_class import player
     try:
         data = request.json
-        bet = data.get("bet")
+        bet = data.get("bet", 0)
 
         # Validate the bet
         if not isinstance(bet, (int, float)) or bet <= 0:
@@ -114,113 +151,94 @@ def start_blackjack():
         if error:
             return jsonify({"error": error}), 400
 
-        # Initialize the game (assigning cards)
-        game_id = str(r.randint(1000, 9999))  # Generate a random game ID
-        player_hand = [deal_card(), deal_card()]  # Player starts with two cards
-        dealer_hand = [deal_card(), deal_card()]  # Dealer starts with two cards
+        # Deal initial cards
+        player_hand = [deal_card(), deal_card()]
+        dealer_hand = [deal_card(), "Hidden"]
 
-        # Create the game state
-        blackjack_games = session.get('blackjack_games', {})
-        blackjack_games[game_id] = {
-            "bet": bet,
+        return jsonify({
             "player_hand": player_hand,
             "dealer_hand": dealer_hand,
-            "player_value": calculate_hand(player_hand),
-            "dealer_value": calculate_hand(dealer_hand),
-            "finished": False
-        }
-
-        # Store the updated game state
-        session['blackjack_games'] = blackjack_games
-
-        # Send response with game details
-        return jsonify({
-            "game_id": game_id,
-            "player_hand": player_hand,
-            "dealer_hand": [dealer_hand[0], "Hidden"],  # Hide dealer's second card
-            "player_value": blackjack_games[game_id]["player_value"],
-            "message": "Game started! Your move: hit or stand."
-        }), 200
+            "bet": bet,
+            "message": "Game started. Your move: hit or stand."
+        })
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+
+@casino_blueprint.route('/blackjack/play', methods=['POST'])
 def play_blackjack():
     from python_app.player_class import player
     try:
         data = request.json
-        game_id = data.get("game_id")
-        action = data.get("action")
+        player_hand = data.get("player_hand", [])
+        dealer_hand = data.get("dealer_hand", [])
+        bet = data.get("bet", 0)
+        action = data.get("action", "").lower()
 
-        # Retrieve the game from session
-        blackjack_games = session.get('blackjack_games', {})
+        if not player_hand or not dealer_hand or not isinstance(bet, (int, float)) or bet <= 0:
+            return jsonify({"error": "Invalid game state"}), 400
 
-        if game_id not in blackjack_games:
-            return jsonify({"error": "Game not found"}), 400
+        if action not in ["hit", "stand"]:
+            return jsonify({"error": "Invalid action"}), 400
 
-        game = blackjack_games[game_id]
-
-        if game["finished"]:
-            return jsonify({"error": "Game already finished"}), 400
-
+        # Handle "hit"
         if action == "hit":
-            # Player hits (draws a card)
-            game["player_hand"].append(deal_card())
-            game["player_value"] = calculate_hand(game["player_hand"])
+            player_hand.append(deal_card())
+            player_value = calculate_hand(player_hand)
 
-            # Check if player has busted (value > 21)
-            if game["player_value"] > 21:
-                game["finished"] = True
-                player.update_balance(-game["bet"])  # Player loses the bet
-                session['blackjack_games'] = blackjack_games  # Update the session
+            if player_value > 21:  # Player busts
+                player.update_balance(-bet)
                 return jsonify({
+                    "player_hand": player_hand,
+                    "dealer_hand": dealer_hand,
                     "result": "Busted! You lost.",
-                    "player_hand": game["player_hand"],
-                    "balance": player.balance
-                }), 200
+                    "balance": player.balance,
+                    "amount": -bet,  # Amount lost
+                    "finished": True
+                })
 
-            session['blackjack_games'] = blackjack_games  # Update the session
             return jsonify({
-                "player_hand": game["player_hand"],
-                "player_value": game["player_value"],
-                "message": "Your move: hit or stand."
-            }), 200
+                "player_hand": player_hand,
+                "dealer_hand": dealer_hand,
+                "message": "Your move: hit or stand.",
+                "finished": False
+            })
 
-        elif action == "stand":
-            # Dealer's turn
-            dealer_value = game["dealer_value"]
-            while dealer_value < 17:
-                game["dealer_hand"].append(deal_card())
-                dealer_value = calculate_hand(game["dealer_hand"])
+        # Handle "stand"
+        if action == "stand":
+            dealer_hand = [card for card in dealer_hand if card != "Hidden"]
+            while calculate_hand(dealer_hand) < 17:  # Dealer must hit until 17
+                dealer_hand.append(deal_card())
 
-            game["dealer_value"] = dealer_value
-            game["finished"] = True
+            player_value = calculate_hand(player_hand)
+            dealer_value = calculate_hand(dealer_hand)
+            result = ""
+            amount = 0
 
-            # Determine outcome
-            if dealer_value > 21 or game["player_value"] > dealer_value:
+            if dealer_value > 21 or player_value > dealer_value:  # Player wins
                 result = "Player wins!"
-                player.update_balance(game["bet"])  # Player wins the bet
-            elif dealer_value > game["player_value"]:
+                amount = bet
+                player.update_balance(amount)
+            elif dealer_value > player_value:  # Dealer wins
                 result = "Dealer wins!"
-                player.update_balance(-game["bet"])  # Player loses the bet
-            else:
+                amount = -bet
+                player.update_balance(amount)
+            else:  # Tie
                 result = "It's a tie!"
 
-            session['blackjack_games'] = blackjack_games  # Update the session
             return jsonify({
+                "player_hand": player_hand,
+                "dealer_hand": dealer_hand,
                 "result": result,
-                "player_hand": game["player_hand"],
-                "dealer_hand": game["dealer_hand"],
-                "player_value": game["player_value"],
-                "dealer_value": game["dealer_value"],
-                "balance": player.balance
-            }), 200
-
-        else:
-            return jsonify({"error": "Invalid action"}), 400
+                "balance": player.balance,
+                "amount": amount,  # Amount won or lost
+                "finished": True
+            })
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
 
 @casino_blueprint.route('/snake-eyes', methods=['POST'])
 def snake_eyes():
@@ -229,82 +247,110 @@ def snake_eyes():
         data = request.json
         bet = data.get("bet", 0)
 
-        # Validate the bet using the player's validate_bet method
+        # Validate the bet
+        if not isinstance(bet, (int, float)) or bet <= 0:
+            return jsonify({"error": "Invalid bet amount"}), 400
+
         error = player.validate_bet(bet)
         if error:
-            return jsonify({"error": error}), 400  # Return validation error if bet is invalid
+            return jsonify({"error": "No money blud"}), 400
 
-        # Roll the dice (both dice are random between 1 and 6)
+        # Roll the dice
         dice_1, dice_2 = r.randint(1, 6), r.randint(1, 6)
-        result = {"rolls": [dice_1, dice_2]}
+        result_message = f"You rolled {dice_1} and {dice_2}."
+        winnings = 0
 
-        # Check the result of the dice roll
-        if dice_1 == dice_2 == 1:
-            # Big win case: double ones (Snake Eyes)
+        # Determine the outcome
+        if dice_1 == dice_2 == 1:  # Snake Eyes
             winnings = bet * 10
-            result.update({"message": "Big win!", "winnings": winnings})
-            player.update_balance(winnings)
-        elif dice_1 == dice_2:
-            # Small win case: any other doubles
+            result_message += f" Snake Eyes! You won {winnings:.2f}€."
+        elif dice_1 == dice_2:  # Any other doubles
             winnings = bet
-            result.update({"message": "Small win!", "winnings": winnings})
-            player.update_balance(winnings)
-        else:
-            # Loss case: no doubles
-            loss = -bet
-            result.update({"message": "You lost!", "winnings": loss})
-            player.update_balance(loss)
+            result_message += f" Doubles! You won {winnings:.2f}€."
+        else:  # No win
+            winnings = -bet
+            result_message += f" No doubles. You lost {bet:.2f}€."
 
-        # Include the player's updated balance in the response
-        result["balance"] = player.balance
-        return jsonify(result)  # Return the final result
+        # Update the player's balance
+        player.update_balance(winnings)
+
+        # Return the result
+        return jsonify({
+            "message": result_message,
+            "dice_rolls": [dice_1, dice_2],
+            "winnings": winnings,
+            "balance": player.balance
+        })
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
 
-@casino_blueprint.route('/hilo', methods=['POST'])
-def hilo():
+@casino_blueprint.route('/hilo/start', methods=['POST'])
+def hilo_start():
     from python_app.player_class import player
     try:
         data = request.json
-
-        # Extract and validate bet and guess from the request
         bet = data.get('bet', 0)
-        guess = data.get('guess', '').upper()
 
-        # Validate the bet and guess
         if not isinstance(bet, (int, float)) or bet <= 0:
             return jsonify({"error": "Invalid or missing bet amount"}), 400
-        if guess not in ["HI", "LO"]:
-            return jsonify({"error": "Invalid guess. Please use 'HI' or 'LO'"}), 400
 
-        # Validate the bet using the player's method
         error = player.validate_bet(bet)
         if error:
-            return jsonify({"error": error}), 400  # Return validation error if bet is invalid
+            return jsonify({"error": error}), 400
 
-        # Generate the two cards
         first_card = r.randint(1, 13)
-        second_card = r.randint(1, 13)
 
-        # Determine the outcome based on the guess
-        result = {"first_card": first_card, "second_card": second_card, "guess": guess}
-        if (guess == "HI" and second_card > first_card) or (guess == "LO" and second_card < first_card):
-            winnings = bet
-            result.update({"message": "You won!", "winnings": winnings})
-            player.update_balance(winnings)
-        else:
-            loss = -bet
-            result.update({"message": "You lost!", "winnings": loss})
-            player.update_balance(loss)
-
-        # Include the player's updated balance in the response
-        result["balance"] = player.balance
-
-        # Return the result as JSON
-        return jsonify(result)
+        return jsonify({
+            "first_card": first_card,
+            "bet": bet,
+            "message": f"The first card is {first_card}. Make your guess: Hi or Lo."
+        })
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+
+@casino_blueprint.route('/hilo/guess', methods=['POST'])
+def hilo_guess():
+    from python_app.player_class import player
+    try:
+        data = request.json
+        first_card = data.get('first_card')
+        bet = data.get('bet')
+        guess = data.get('guess', '').upper()
+
+        if not first_card or not isinstance(first_card, int):
+            return jsonify({"error": "Missing or invalid first card."}), 400
+        if not isinstance(bet, (int, float)) or bet <= 0:
+            return jsonify({"error": "Invalid or missing bet amount"}), 400
+        if guess not in ["HI", "LO"]:
+            return jsonify({"error": "Invalid guess. Please use 'HI' or 'LO'."}), 400
+
+        second_card = r.randint(1, 13)
+
+        result_message = f"The first card was {first_card}, and the second card is {second_card}."
+        winnings = 0
+
+        if (guess == "HI" and second_card > first_card) or (guess == "LO" and second_card < first_card):
+            winnings = bet
+            result_message += f" You guessed correctly! You won {winnings:.2f}€."
+        elif second_card == first_card:
+            result_message += " It's a tie! No winnings or losses."
+        else:
+            winnings = -bet
+            result_message += f" You guessed wrong. You lost {bet:.2f}€."
+
+        player.update_balance(winnings)
+
+        return jsonify({
+            "first_card": first_card,
+            "second_card": second_card,
+            "bet": bet,
+            "message": result_message,
+            "balance": player.balance
+        })
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
