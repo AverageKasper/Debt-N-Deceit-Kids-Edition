@@ -363,6 +363,8 @@ td {
   z-index: 3;  /* Ensures it stays on top of the main content */
 }
 
+
+
 .ad-left .ad {
   width: 150%;  /* Full width of the container */
   height: 50%;  /* Each ad takes about 48% of the height, 4% total space for margin */
@@ -381,7 +383,7 @@ td {
 /* Right Ad */
 .ad-right {
   position: fixed;
-  top: 0;
+  top: ;
   right: 0;
   width: 80px;  /* Width of the vertical ad */
   height: 100vh;  /* Full height of the viewport */
@@ -389,12 +391,12 @@ td {
   display: flex;
   flex-direction: column;  /* Stack ads vertically */
   justify-content: space-between;  /* Space out the two ads */
-  z-index: 3;  /* Ensures it stays on top of the main content */
+  z-index: 9999;  /* Ensures it stays on top of the main content */
 }
 
 .ad-right .ad {
   width: 100%;  /* Full width of the container */
-  height: 53%;  /* Each ad takes about 48% of the height, 4% total space for margin */
+  height: 50%;  /* Each ad takes about 48% of the height, 4% total space for margin */
   background-color: black;  /* Optional background for visibility */
   display: flex;
   justify-content: center;
