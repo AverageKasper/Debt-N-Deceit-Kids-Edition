@@ -3,43 +3,63 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gambling Games</title>
-    <link rel="stylesheet" href="css/gambling.css">
-    <script src="../javascript/gambling.js" defer></script>
+    <title>Casino Games</title>
+    <link rel="stylesheet" href="CSS/gambling.css">
+    <script src="../JS/gambling.js" defer></script>
 </head>
 <body>
-    <h1>Gambling Games</h1>
-    <p>Current Balance: <span id="balance">Loading...</span></p>
-    <label for="bet">Enter your bet:</label>
-    <input type="number" id="bet" placeholder="Enter your bet">
+    <header>
+        <h1>Welcome to the Casino</h1>
+    </header>
 
-    <div id="game-buttons">
-        <button onclick="showGame('snake-eyes')">Play Snake Eyes</button>
-        <button onclick="showGame('hilo')">Play Hi-Lo</button>
-        <button onclick="showGame('horse-race')">Play Horse Race</button>
-        <button onclick="showGame('blackjack')">Play Blackjack</button>
-    </div>
+    <main class="container">
+        <section id="balance-section">
+            <h2>Your Balance</h2>
+            <p><strong>Balance:</strong> <span id="balance">Loading...</span> euros</p>
+            <label for="bet">Enter your bet:</label>
+            <input type="number" id="bet" placeholder="Enter your bet">
+        </section>
 
-    <div id="snake-eyes" class="game-container">
-        <h2>Snake Eyes</h2>
-        <div id="snake-eyes-container"></div>
-    </div>
+        <section id="menu-section">
+            <h2>Choose a Game</h2>
+            <div id="game-buttons" class="menu">
+                <button class="menu-button" onclick="showGame('snake-eyes')">Snake Eyes</button>
+                <button class="menu-button" onclick="showGame('hilo')">Hi-Lo</button>
+                <button class="menu-button" onclick="showGame('horse-race')">Horse Race</button>
+                <button class="menu-button" onclick="showGame('blackjack')">Blackjack</button>
+            </div>
+        </section>
 
-    <div id="hilo" class="game-container">
-        <h2>Hi-Lo</h2>
-        <div id="hilo-container"></div>
-    </div>
+        <section id="game-section">
+            <div id="snake-eyes" class="game-container">
+                <h2>Snake Eyes</h2>
+                <div id="snake-eyes-container"></div>
+            </div>
 
-    <div id="horse-race" class="game-container">
-        <h2>Horse Race</h2>
-        <div id="horse-race-container"></div>
-    </div>
+            <div id="hilo" class="game-container">
+                <h2>Hi-Lo</h2>
+                <div id="hilo-container"></div>
+            </div>
 
-    <div id="blackjack" class="game-container">
-        <h2>Blackjack</h2>
-        <div id="blackjack-container"></div>
-    </div>
+            <div id="horse-race" class="game-container">
+                <h2>Horse Race</h2>
+                <div id="horse-race-container"></div>
+            </div>
 
-    <div id="game-result" style="margin-top: 20px; font-weight: bold;"></div>
+            <div id="blackjack" class="game-container">
+                <h2>Blackjack</h2>
+                <div id="blackjack-container"></div>
+            </div>
+        </section>
+
+        <section id="game-result" class="result">
+            <h2>Game Result</h2>
+            <p id="result-message"></p>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Casino Games. All rights reserved.</p>
+    </footer>
 </body>
 </html>
