@@ -17,6 +17,7 @@
     <script ref="script" src="../javascript/sql_updates.js" defer></script>
     <script ref="script" src="../javascript/random_events.js" defer></script>
     <script ref="script" src="../javascript/ending.js" defer></script>
+    <script src="../javascript/gambling.js" defer></script>
 </head>
 
 <body>
@@ -58,8 +59,77 @@
             </div>
         </div>
     </div>
-    <div id="gambling-modal" class="modal">
+    <div id="gambling-modal" class="gambling-modal">
+        <div class="gambling-modal-content">
+            <header>
+                <h1>Welcome to the Casino</h1>
+            </header>
 
+            <main class="container">
+                <section id="balance-section">
+                    <h2>Your Balance</h2>
+                    <p><strong>Balance:</strong> <span id="balance">Loading...</span> euros</p>
+                    <label for="bet">Enter your bet:</label>
+                    <input type="number" id="bet" placeholder="Enter your bet">
+                </section>
+
+                <section id="menu-section">
+                    <h2>Choose a Game</h2>
+                    <div id="game-buttons" class="menu">
+                        <button class="button" onclick="showGame('snake-eyes')">Snake Eyes</button>
+                        <button class="button" onclick="showGame('hilo')">Hi-Lo</button>
+                        <button class="button" onclick="showGame('horse-race')">Horse Race</button>
+                        <button class="button" onclick="showGame('blackjack')">Blackjack</button>
+                        <button id="close-gambling" class="button">Close</button>
+                    </div>
+                </section>
+
+                <section id="game-section">
+                    <div id="snake-eyes" class="gg-modal">
+                        <div class="gambling-game-content">
+                            <button class="button close-snake-eyes" id="snake-eyes">Close Game</button>
+                            <h2>Snake Eyes</h2>
+                            <div id="snake-eyes-container"></div>
+                        </div>
+                    </div>
+
+                    <div id="hilo" class="gg-modal">
+                        <div class="gambling-game-content">
+                            <button class="button close-hilo"id="hilo">Close Game</button>
+                            <h2>Hi-Lo</h2>
+                            <div id="hilo-container"></div>
+                            
+                        </div>
+                    </div>
+
+                    <div id="horse-race" class="gg-modal">
+                        <div class="gambling-game-content">
+                            <button class="button close-horse-race" id="horse-race">Close Game</button>
+                            <h2>Horse Race</h2>
+                            <div id="horse-race-container"></div>
+                        </div>
+                    </div>
+
+                    <div id="blackjack" class="gg-modal">
+                        <div class="gambling-game-content">
+                            <button class="button close-blackjack" id="blackjack">Close Game</button>
+                            <h2>Blackjack</h2>
+                            <div id="blackjack-container"></div>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="game-result" class="result">
+                    <h2>Game Result</h2>
+                    <p id="result-message"></p>
+                </section>
+            </main>
+
+            <footer>
+                <p>&copy; 2024 Casino Games. All rights reserved.</p>
+            </footer>
+
+        </div>
     </div>
     <div id="pp-modal" class="modal">
         <div class="modal-content">
