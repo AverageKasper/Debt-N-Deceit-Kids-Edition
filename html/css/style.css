@@ -36,18 +36,21 @@ body {
 
 }
 
-/* Header with proportional height */
-.header {
-  width: 80%;
-  height: 10%;
-  /* Relative to container */
-  background-color: #4CAF50;
-  text-align: center;
-  line-height: 10%;
-  /* Aligns text vertically */
-  color: white;
-  margin-bottom: 2%;
-}
+
+  .header {
+    width: 80%;
+    height: 10%;
+    
+    background-color: #31203d;
+    text-align: center;
+    line-height: 10%;
+    
+    color: white;
+    margin-bottom: 2%;
+    display: flex;
+    justify-content: center;  
+    align-items: center;
+  }
 
 /* Content area fixes */
 .content-area {
@@ -310,3 +313,42 @@ td {
   /* Enable scroll if needed */
 
 }
+/* Left Ad */
+.ad-left {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 80px;  /* Width of the vertical ad */
+  height: 100vh;  /* Full height of the viewport */
+  background-color: #f1f1f1;  /* Fallback background color */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 3;  /* Ensures it stays on top of the main content */
+}
+
+.ad-left img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Right Ad */
+.ad-right {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 80px;  /* Width of the vertical ad */
+  height: 100vh;  /* Full height of the viewport */
+  background-color: #f1f1f1;  /* Fallback background color */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 3;  /* Ensures it stays on top of the main content */
+}
+
+.ad-right img {
+  max-width: 100%;
+  height: auto;
+}
+
+
