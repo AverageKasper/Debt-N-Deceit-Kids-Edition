@@ -40,16 +40,17 @@ body {
   .header {
     width: 80%;
     height: 10%;
-    
     background-color: #31203d;
     text-align: center;
     line-height: 10%;
-    
+    font-family: 'Lobster', sans-serif;
     color: white;
     margin-bottom: 2%;
     display: flex;
     justify-content: center;  
     align-items: center;
+    border-radius: 10px;
+    
   }
 
 /* Content area fixes */
@@ -95,6 +96,17 @@ body {
   padding: 4%;
   margin: 1%;
 }
+.button_close_random {
+  flex-grow: 1;
+  background-color: #008CBA;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 100%;
+  padding: 3%;
+  margin: 1%;
+}
 .button_pickpocket {
   flex-grow: 1;
   background-color: #008CBA;
@@ -114,9 +126,8 @@ body {
   margin: 1%;
 }
 
-.button:hover {
-  background-color: #005f73;
-}
+
+
 .stat-block {
   display: flex;
   flex-direction: column;
@@ -166,6 +177,31 @@ body {
   text-align: center;
 }
 
+#HARD {
+  background-color: rgb(169, 66, 14)
+}
+#HARD:hover {
+  background-color: rgb(124, 50, 13);
+  transform: scale(1.05);
+}
+
+#MEDIUM {
+  background-color: rgb(218, 206, 38)
+}
+
+#MEDIUM:hover {
+  background-color: rgb(225, 171, 37);
+  transform: scale(1.05);
+}
+
+#EASY {
+  background-color: rgb(34, 197, 5)
+}
+
+#EASY:hover {
+  background-color: #00732e;
+  transform: scale(1.05);
+}
 #map {
   height: 100%;
   width: 100%;
@@ -329,7 +365,7 @@ td {
 
 .ad-left img {
   max-width: 100%;
-  height: auto;
+  height: 80%;
 }
 
 /* Right Ad */
