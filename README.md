@@ -33,5 +33,5 @@ return jsonify(result_json)
 ## Ideas
 
 - if we/i have time and allowed(would manly be javascript), try to add fishing minigame to medium airport.
-- 
+- api for hangman: https://www.wordgamedb.com/endpoints 
 
