@@ -1,7 +1,9 @@
 /* html/body height defined here bcs using % and not px shit*/
 html,
 body {
-  background-color: #352929;
+  background-image: url('../image/background.jpg');
+  background-size: cover;
+  width: 100%;
   font-family: 'Fira Code', monospace;
   font-display: monospace;
   margin: 0;
