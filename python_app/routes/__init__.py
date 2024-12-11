@@ -5,7 +5,7 @@ from python_app.routes.sql import sql_blueprint
 from python_app.routes.random_events import random_blueprint
 from python_app.routes.medium_task import medium_blueprint
 from python_app.routes.casino_blue import casino_blueprint
-
+from python_app.routes.lollipop_task import lollipop_blueprint
 
 def register_blueprints(app):
     app.register_blueprint(small_blueprint, url_prefix='/small')
@@ -15,3 +15,4 @@ def register_blueprints(app):
     app.register_blueprint(random_blueprint, url_prefix='/random')
     app.register_blueprint(medium_blueprint, url_prefix='/medium')
     app.register_blueprint(casino_blueprint, url_prefix='/casino')
+    app.register_blueprint(lollipop_blueprint, url_prefix="/lollipop")

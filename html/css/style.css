@@ -1,7 +1,9 @@
 /* html/body height defined here bcs using % and not px shit*/
 html,
 body {
-  background-color: #352929;
+  background-image: url('../image/background.jpg');
+  background-size: cover;
+  width: 100%;
   font-family: 'Fira Code', monospace;
   font-display: monospace;
   margin: 0;
@@ -34,18 +36,22 @@ body {
 
 }
 
-/* Header with proportional height */
-.header {
-  width: 80%;
-  height: 10%;
-  /* Relative to container */
-  background-color: #4CAF50;
-  text-align: center;
-  line-height: 10%;
-  /* Aligns text vertically */
-  color: white;
-  margin-bottom: 2%;
-}
+
+  .header {
+    width: 80%;
+    height: 10%;
+    background-color: #31203d;
+    text-align: center;
+    line-height: 10%;
+    font-family: 'Lobster', sans-serif;
+    color: white;
+    margin-bottom: 2%;
+    display: flex;
+    justify-content: center;  
+    align-items: center;
+    border-radius: 10px;
+    
+  }
 
 /* Content area fixes */
 .content-area {
@@ -84,12 +90,35 @@ body {
   background-color: #008CBA;
   color: white;
   border: none;
-  border-radius: 10%;
+  border-radius: 10px;
   cursor: pointer;
   font-size: 100%;
-  padding: 1%;
+  padding: 4%;
   margin: 1%;
 }
+.button_close_random {
+  flex-grow: 1;
+  background-color: #008CBA;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 100%;
+  padding: 3%;
+  margin: 1%;
+}
+.button_pickpocket {
+  flex-grow: 1;
+  background-color: #008CBA;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 100%;
+  padding: 6px;
+  margin: 1%;
+}
+
 .random_buttons {
   display: flex;
   align-items: center;
@@ -97,20 +126,23 @@ body {
   margin: 1%;
 }
 
-.button:hover {
-  background-color: #005f73;
-}
+
+
 .stat-block {
   display: flex;
   flex-direction: column;
-
-
+  background-color: rgb(49, 49, 49);
+  border-radius: 10px;
+  padding: 10px;
   box-sizing: content-box;
   color: #199eca;
 }
 .stat-block p {
   margin: 0;
   padding: 0;
+  
+  border-radius: 10px;
+
 }
 .start-modal {
   display: block;
@@ -145,6 +177,31 @@ body {
   text-align: center;
 }
 
+#HARD {
+  background-color: rgb(169, 66, 14)
+}
+#HARD:hover {
+  background-color: rgb(124, 50, 13);
+  transform: scale(1.05);
+}
+
+#MEDIUM {
+  background-color: rgb(218, 206, 38)
+}
+
+#MEDIUM:hover {
+  background-color: rgb(225, 171, 37);
+  transform: scale(1.05);
+}
+
+#EASY {
+  background-color: rgb(34, 197, 5)
+}
+
+#EASY:hover {
+  background-color: #00732e;
+  transform: scale(1.05);
+}
 #map {
   height: 100%;
   width: 100%;
@@ -315,3 +372,44 @@ td {
   text-align: center;
 
 }
+
+
+/* Left Ad */
+.ad-left {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 80px;  /* Width of the vertical ad */
+  height: 100vh;  /* Full height of the viewport */
+  background-color: #f1f1f1;  /* Fallback background color */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 3;  /* Ensures it stays on top of the main content */
+}
+
+.ad-left img {
+  max-width: 100%;
+  height: 80%;
+}
+
+/* Right Ad */
+.ad-right {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 80px;  /* Width of the vertical ad */
+  height: 100vh;  /* Full height of the viewport */
+  background-color: #f1f1f1;  /* Fallback background color */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 3;  /* Ensures it stays on top of the main content */
+}
+
+.ad-right img {
+  max-width: 100%;
+  height: auto;
+}
+
+

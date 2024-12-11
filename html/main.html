@@ -2,6 +2,7 @@
 <html lang="en">
 
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Debt & Deceit Kids Edition</title>
@@ -18,13 +19,28 @@
     <script ref="script" src="../javascript/random_events.js" defer></script>
     <script ref="script" src="../javascript/ending.js" defer></script>
     <script src="../javascript/gambling.js" defer></script>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
 </head>
 
 <body>
+    <!-- Left Sidebar Ad -->
+    <div class="ad-left">
+        <img src="/html\image\coffee.jpg" alt="Left Ad">
+    </div>
+
+    <!-- Right Sidebar Ad -->
+    <div class="ad-right">
+        <img src="path/to/your/right-ad.jpg" alt="Right Ad">
+    </div>
+
+    
     <div class="container">
 
         <header class="header">
-            <h1>debt and deceipt 👶 edition</h1>
+            <h1>DEBT AND DECEIPT 👶 EDITION</h1>
         </header>
         <div class="content-area">
             <div class="main-box">
@@ -134,12 +150,12 @@
     <div id="pp-modal" class="modal">
         <div class="modal-content">
             <h1>You have chosen the life of crime</h1>
-            <p>Who do you want to pickpocket from </p>
-            <button id="pp_button_1" class="button"></button>
-            <button id="pp_button_2" class="button"></button>
-            <button id="pp_button_3" class="button"></button>
+            <p>Who do you want to pickpocket from? </p>
+            <button id="pp_button_1" class="button_pickpocket"></button>
+            <button id="pp_button_2" class="button_pickpocket"></button>
+            <button id="pp_button_3" class="button_pickpocket"></button>
             <h3 id="pickpocket_result"></h3>
-            <button id="close_pp" class="button">Close</button>
+            <button id="close_pp" class="button_pickpocket">Close</button>
             <script defer src="../javascript/pickpocketing.js"></script>
         </div>
     </div>
@@ -148,7 +164,7 @@
             <h1>Lets see what you found in the trash</h1>
             <h3 id="diving_text"></h3>
             <h3 id="diving_reward"></h3>
-            <button id="close_diving" class="button">Close</button>
+            <button id="close_diving" class="button_close_diving">Close</button>
             <script defer src="../javascript/diving.js"></script>
         </div>
     </div>
@@ -194,7 +210,7 @@
             <img id="random_image" class="random_image" src="" alt="">
             <h4 id="event_text"></h4>
             <div id="random_buttons" class="random_buttons">
-                <button id="close_random" class="button">Close</button>
+                <button id="close_random" class="button_close_random">Close</button>
             </div>
         </div>
     </div>
@@ -203,7 +219,7 @@
             <h1>Game has ended</h1>
             <h2 id="end_type"></h2>
             <h3 id="ending_text"></h3>
-            <button id="open_leaderboard" class="button">Open leaderboard</button>
+            <button id="open_leaderboard" class="button_ending">Open leaderboard</button>
         </div>
     </div>
     <div id="leaderboard_modal" class="modal">
@@ -216,7 +232,7 @@
                 </thead>
                 <tbody id="leaderboard_body"></tbody>
             </table>
-            <button id="close_leaderboard" class="button">Close leaderboard</button>
+            <button id="close_leaderboard" class="button_leaderboard">Close leaderboard</button>
         </div>
     </div>
 </body>
