@@ -117,15 +117,18 @@ async function button_to_airport() {
     airport_1_button.textContent = airport_list.airport_1.name
     airport_1_button.className = 'button'
     airport_1_button.addEventListener('click', async (evt) => {
-        small_tasks();
+        await random_event();
         await shark_moving(player_name_input.value, 1);
         await update_stats();
+        small_tasks();
+        
         
     })
     const airport_2_button = document.createElement('button')
     airport_2_button.textContent = airport_list.airport_2.name
     airport_2_button.className = 'button'
     airport_2_button.addEventListener('click', async (evt) => {
+        await random_event();
         console.log('2 clicked')
         await shark_moving(player_name_input.value, 1);
         await update_stats();
@@ -134,6 +137,8 @@ async function button_to_airport() {
     airport_3_button.textContent = airport_list.airport_3.name
     airport_3_button.className = 'button'
     airport_3_button.addEventListener('click', async (evt) => {
+        await ending('good_pill')
+        await random_event();
         console.log('3 clicked')
         await shark_moving(player_name_input.value, 1);
         await update_stats();
@@ -160,6 +165,9 @@ kbButtons.forEach((button) => {
         console.log(name_taken);
         if (name_taken.exists == true) {
             error_p.textContent = ('Name already taken, please choose another name');
+            return;
+        } else if (player_name == '') {
+            error_p.textContent = ('Please enter a name');
             return;
         } else {
             error_p.textContent = '';

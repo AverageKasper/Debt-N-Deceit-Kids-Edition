@@ -31,9 +31,9 @@ class Player:
         self.carbon += amount
         update_carbon(self.name, self.carbon)
 
-    def update_shark(self, amount):
+    def class_update_shark(self, amount):
         self.shark += amount
-        update_shark(self.name, self.shark)
+        update_shark(self.name, amount)
     
     def update_inventory(self, amount):
         self.inventory += amount
@@ -43,7 +43,7 @@ class Player:
         self.is_alive = False
         self.death_reason=reason
 
-        print(f"{self.name} has lost. Reason: {reason}")
+        
 
 
     def validate_bet(self, bet):

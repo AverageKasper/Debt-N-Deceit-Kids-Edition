@@ -16,13 +16,13 @@ async function pp_init() {
     console.log(viclims_json);
     pp_button_1.name = viclims_json[0].victim_1.name;
     pp_button_1.value = viclims_json[0].victim_1.difficulty;
-    pp_button_1.textContent = viclims_json[0].victim_1.name;
+    pp_button_1.textContent = viclims_json[0].victim_1.name + ' (' + viclims_json[0].victim_1.difficulty + ')';
     pp_button_2.name = viclims_json[0].victim_2.name;
     pp_button_2.value = viclims_json[0].victim_2.difficulty;
-    pp_button_2.textContent = viclims_json[0].victim_2.name;
+    pp_button_2.textContent = viclims_json[0].victim_2.name + ' (' + viclims_json[0].victim_2.difficulty + ')';
     pp_button_3.name = viclims_json[0].victim_3.name;
     pp_button_3.value = viclims_json[0].victim_3.difficulty;
-    pp_button_3.textContent = viclims_json[0].victim_3.name;
+    pp_button_3.textContent = viclims_json[0].victim_3.name + ' (' + viclims_json[0].victim_3.difficulty + ')';
     pp_button_1.style.display = 'block';
     pp_button_2.style.display = 'block';
     pp_button_3.style.display = 'block';
