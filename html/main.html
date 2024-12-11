@@ -15,6 +15,8 @@
         integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
     <script ref="script" src="../javascript/main.js" defer></script>
     <script ref="script" src="../javascript/sql_updates.js" defer></script>
+    <script ref="script" src="../javascript/random_events.js" defer></script>
+    <script ref="script" src="../javascript/ending.js" defer></script>
 </head>
 
 <body>
@@ -78,6 +80,37 @@
             <h3 id="diving_reward"></h3>
             <button id="close_diving" class="button">Close</button>
             <script defer src="../javascript/diving.js"></script>
+        </div>
+    </div>
+    <div id="random-modal" class="modal">
+        <div class="modal-content">
+            <h1>Random Event!</h1>
+            <img id="random_image" class="random_image" src="" alt="">
+            <h4 id="event_text"></h4>
+            <div id="random_buttons" class="random_buttons">
+                <button id="close_random" class="button">Close</button>
+            </div>
+        </div>
+    </div>
+    <div id="ending_modal" class="ending_modal">
+        <div class="ending_modal_content">
+            <h1>Game has ended</h1>
+            <h2 id="end_type"></h2>
+            <h3 id="ending_text"></h3>
+            <button id="open_leaderboard" class="button">Open leaderboard</button>
+        </div>
+    </div>
+    <div id="leaderboard_modal" class="modal">
+        <div id="leaderboard_content" class="modal-content">
+            <table>
+                <thead>
+                    <th>Rank</th>
+                    <th>Player</th>
+                    <th>Money</th>
+                </thead>
+                <tbody id="leaderboard_body"></tbody>
+            </table>
+            <button id="close_leaderboard" class="button">Close leaderboard</button>
         </div>
     </div>
 </body>
