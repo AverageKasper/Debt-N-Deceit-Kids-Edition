@@ -1,13 +1,11 @@
 import random as r
 from flask import Blueprint, jsonify, request, session, Flask
-from python_app.player_class import create_player_object
 
 casino_blueprint = Blueprint('casino', __name__)
 
 
 @casino_blueprint.route('/menu', methods=['GET'])
 def casino_menu():
-    create_player_object('test', 1000, 100, 0, 0, 'Helsinki-Vantaa', 'Finland', 'large_airport')
     from python_app.player_class import player
 
     try:
