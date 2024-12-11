@@ -86,12 +86,24 @@ body {
   background-color: #008CBA;
   color: white;
   border: none;
-  border-radius: 10%;
+  border-radius: 10px;
   cursor: pointer;
   font-size: 100%;
-  padding: 1%;
+  padding: 4%;
   margin: 1%;
 }
+.button_pickpocket {
+  flex-grow: 1;
+  background-color: #008CBA;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 100%;
+  padding: 6px;
+  margin: 1%;
+}
+
 .random_buttons {
   display: flex;
   align-items: center;
@@ -105,15 +117,18 @@ body {
 .stat-block {
   display: flex;
   flex-direction: column;
-
-
+  background-color: rgb(49, 49, 49);
+  border-radius: 10px;
+  padding: 10px;
   box-sizing: content-box;
   color: #199eca;
 }
 .stat-block p {
   margin: 0;
   padding: 0;
-  background-color: rgb(49, 49, 49);
+  
+  border-radius: 10px;
+
 }
 .start-modal {
   display: block;
