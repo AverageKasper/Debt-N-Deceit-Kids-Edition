@@ -4,5 +4,4 @@ async function shark_moving(player_name, amount) {
         method: 'POST'
     });
     const shark_json = await response.json();
-    console.log(shark_json);
 }

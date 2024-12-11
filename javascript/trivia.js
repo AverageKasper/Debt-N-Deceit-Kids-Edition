@@ -27,7 +27,6 @@ async function get_trivia_category() {
     item.addEventListener('click', async function () {
       let questions = await trivia_fetch(item.name);
       if (questions) {
-        console.log(questions);
         await start_trivia(questions);
       }
     });
@@ -46,7 +45,6 @@ async function start_trivia(questions) {
   let correctAnswers = 0;
   currentQuestionIndex == 0;
   correctAnswers == 0;
-  console.log(questions.length);
   trivia_question_div.style.display = 'block';
 
 
@@ -56,12 +54,7 @@ async function start_trivia(questions) {
       return;
     }
     trivia_result_modal.style.display = 'none';
-    console.log(currentQuestionIndex);
-    console.log(questions);
-
     const questionData = questions[`question_${currentQuestionIndex + 1}`];
-    console.log(questionData);
-    console.log(questions);
     trivia_question.innerHTML = decodeHTMLEntities(questionData.question);
 
     const answers = shuffle([
@@ -124,7 +117,7 @@ async function endTrivia(correct) {
     },
     body: JSON.stringify({ correct })
   });
-  update_stats();
+  await update_stats();
 
 
 }
