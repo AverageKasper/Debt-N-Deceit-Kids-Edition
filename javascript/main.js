@@ -13,7 +13,7 @@ const main_buttons_div = document.getElementById('main-buttons');
 // Modals
 const pp_modal = document.getElementById('pp-modal');
 const diving_modal = document.getElementById('diving-modal');
-
+const gambling_modal = document.getElementById('gambling-modal');
 // Map init
 let map_point;
 let map = L.map('map', {
@@ -83,6 +83,7 @@ async function small_tasks() {
     small_button_1.addEventListener('click', async (evt) => {
         await pp_init();
         await shark_moving(player_name_input.value, -1);
+        await update_stats();
         pp_modal.style.display = 'block';
     });
 
@@ -92,7 +93,49 @@ async function small_tasks() {
     small_button_2.addEventListener('click', async (evt) => {
         await get_diving();
         await shark_moving(player_name_input.value, -1);
+        await update_stats();
         diving_modal.style.display = 'block';
+    });
+
+    const small_button_3 = document.createElement('button')
+    small_button_3.textContent = 'Go to the next airport'
+    small_button_3.className = 'button'
+    small_button_3.addEventListener('click', async (evt) => {
+        clear_map();
+        button_to_airport();
+
+    });
+    
+    main_buttons_div.appendChild(small_button_1)
+    main_buttons_div.appendChild(small_button_2)
+    main_buttons_div.appendChild(small_button_3)
+}
+
+async function medium_tasks() {
+
+}
+
+
+
+
+async function large_tasks() {
+    main_buttons_div.innerHTML = '';
+    const small_button_1 = document.createElement('button')
+    small_button_1.textContent = 'Gambling'
+    small_button_1.className = 'button'
+    small_button_1.addEventListener('click', async (evt) => {
+        await getBalance();
+        await shark_moving(player_name_input.value, -1);
+        gambling_modal.style.display = 'block';
+    });
+
+    const small_button_2 = document.createElement('button')
+    small_button_2.textContent = 'Lollipop'
+    small_button_2.className = 'button'
+    small_button_2.addEventListener('click', async (evt) => {
+        
+        await shark_moving(player_name_input.value, -1);
+        return;
     });
 
     const small_button_3 = document.createElement('button')
@@ -107,7 +150,6 @@ async function small_tasks() {
     main_buttons_div.appendChild(small_button_2)
     main_buttons_div.appendChild(small_button_3)
 }
-
 
 async function button_to_airport() {
     main_buttons_div.innerHTML = '';
@@ -137,11 +179,10 @@ async function button_to_airport() {
     airport_3_button.textContent = airport_list.airport_3.name
     airport_3_button.className = 'button'
     airport_3_button.addEventListener('click', async (evt) => {
-        await ending('good_pill')
         await random_event();
-        console.log('3 clicked')
         await shark_moving(player_name_input.value, 1);
         await update_stats();
+        large_tasks();
     })
     main_buttons_div.appendChild(airport_1_button)
     main_buttons_div.appendChild(airport_2_button)
