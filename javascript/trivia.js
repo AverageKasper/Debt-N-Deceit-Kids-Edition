@@ -44,6 +44,8 @@ function shuffle(array) {
 async function start_trivia(questions) {
   let currentQuestionIndex = 0;
   let correctAnswers = 0;
+  currentQuestionIndex == 0;
+  correctAnswers == 0;
   console.log(questions.length);
   trivia_question_div.style.display = 'block';
 
@@ -91,10 +93,10 @@ async function start_trivia(questions) {
     buttons.forEach(button => trivia_question_div.appendChild(button));
   }
 
-  trivia_continue.addEventListener('click', () => {
+  trivia_continue.onclick = () => {
     trivia_result_modal.style.display = 'none';
     askQuestion();
-  });
+  };
 
   askQuestion();
 }
