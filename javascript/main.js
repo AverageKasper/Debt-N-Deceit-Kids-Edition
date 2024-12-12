@@ -38,6 +38,16 @@ async function update_stats() {
     return player_data
 }
 
+async function use_carbon(name_of_player, amount) {
+    await fetch(`http://127.0.0.1:4000/sql/carbon/${name_of_player}/${amount}`, {
+        method: "POST",
+        headers: { 'Content-Type': 'application/json' }
+    }
+    ).then(response => response.json())
+    .catch(error => {
+        console.error('Error fetching balance:', error);
+    });
+}
 // fix this shit i have no idea why this works
 async function airport_selection() {
     let next_airports = {}
@@ -190,7 +200,9 @@ async function button_to_airport() {
     airport_1_button.addEventListener('click', async (evt) => {
         await random_event();
         await shark_moving(player_name_input.value, 1);
+        
         await update_stats();
+        
         small_tasks();
         
         
@@ -201,6 +213,7 @@ async function button_to_airport() {
     airport_2_button.addEventListener('click', async (evt) => {
         await random_event();
         await shark_moving(player_name_input.value, 1);
+
         await update_stats();
         medium_tasks();
     })

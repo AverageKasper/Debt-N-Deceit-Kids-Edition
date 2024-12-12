@@ -85,12 +85,13 @@ def update_money(player_name, money):
         if cursor:
             cursor.close()
 
+@sql_blueprint.route('/carbon_use/<player_name>/<carbon>')
 def update_carbon(player_name, carbon):
     cursor = None
     try:
         with conn.cursor() as cursor:
             cursor.execute("""
-                UPDATE player SET carbon = %s WHERE player_name = %s
+                UPDATE player SET carbon = carbon + %s WHERE player_name = %s
             """, (carbon, player_name))
             conn.commit()
     except mysql.connector.Error as err:
@@ -98,6 +99,7 @@ def update_carbon(player_name, carbon):
     finally:
         if cursor:
             cursor.close()
+    return jsonify({"monke": True})
 
 @sql_blueprint.route('/update_shark/<player_name>/<shark>', methods=['POST'])
 def update_shark(player_name, shark):
