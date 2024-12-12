@@ -66,9 +66,6 @@ function placeBet(gameId, extraData = {}) {
             } else {
                 balanceSpan.textContent = data.balance || data.player_balance;
                 gameResultDiv.textContent = data.message || 'Game completed.';
-                if (data.race_results) {
-                    console.log('Race Results:', data.race_results);
-                }
             }
         })
         .catch(error => {
@@ -123,7 +120,6 @@ function initSnakeEyes() {
 
 // Initialize Hi-Lo logic
 function initHiLo() {
-    console.log('initHiLo');
     document.getElementById('hilo-container').innerHTML = `
         <button id="hilo-start" class="button">Start Game</button>
         <div id="hilo-first-card" style="display: none;"></div>
@@ -133,7 +129,6 @@ function initHiLo() {
         </div>
         <div id="hilo-result"></div>
     `;
-    console.log('initHiLo2');
     const firstCardDiv = document.getElementById('hilo-first-card');
     const guessDiv = document.getElementById('hilo-guess');
     const resultDiv = document.getElementById('hilo-result');

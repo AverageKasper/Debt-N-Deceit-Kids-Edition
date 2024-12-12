@@ -33,10 +33,9 @@ async function update_stats() {
     const player_name = player_name_input.value;
     let player_stats = await fetch(`http://127.0.0.1:4000/sql/player_stats/${player_name}`);
     let player_data = await player_stats.json();
-    console.log(player_data);
     stat_block.innerHTML = `<p>Name: ${player_name}<br>Money: ${player_data.money}<br>Debt: ${10000 - player_data.money}<br>
     Carbon: ${player_data.carbon}<br>Shark: ${player_data.shark} steps behind<br>Inventory: ${player_data.inventory}`
-
+    return player_data
 }
 
 // fix this shit i have no idea why this works
@@ -62,9 +61,7 @@ async function airport_selection() {
                 let longitude = airport_data.longitude_deg;
                 map_point = L.marker([latitude, longitude]).addTo(map);
                 map_point.bindPopup(`<b>${airport_data.name}</b>`);
-                console.log(airport_data);
                 next_airports['airport_' + i] = airport_data;
-                console.log(next_airports);
             } else {
                 console.error(`Airport data for ${type} is missing latitude or longitude`);
             }
@@ -177,10 +174,24 @@ async function large_tasks() {
     main_buttons_div.appendChild(large_button_3)
 }
 
+async function check_shark() {
+    let current_stats = await update_stats();
+    if (current_stats.shark <= 0) {
+        if (current_stats.inventory > 0) {
+            shark_gets_hit(current_stats.name);
+        }
+        else if (current_stats.money < 10000) {
+            ending('bad_shark')
+        } else {
+            ending('good_shark')
+        }
+    }
+}
+
 async function button_to_airport() {
     main_buttons_div.innerHTML = '';
+    
     const airport_list = await airport_selection()
-    console.log(airport_list)
     const airport_1_button = document.createElement('button')
     airport_1_button.textContent = airport_list.airport_1.name
     airport_1_button.className = 'button'
@@ -213,6 +224,7 @@ async function button_to_airport() {
     main_buttons_div.appendChild(airport_1_button)
     main_buttons_div.appendChild(airport_2_button)
     main_buttons_div.appendChild(airport_3_button)
+    await check_shark();
 }
 
 function clear_map() {
@@ -229,7 +241,6 @@ kbButtons.forEach((button) => {
         const player_name = player_name_input.value;
         const result = await fetch(`http://127.0.0.1:4000/sql/check_name/${player_name}`);
         const name_taken = await result.json();
-        console.log(name_taken);
         if (name_taken.exists == true) {
             error_p.textContent = ('Name already taken, please choose another name');
             return;
@@ -240,7 +251,6 @@ kbButtons.forEach((button) => {
             error_p.textContent = '';
             const start_game = await fetch(`http://127.0.0.1:4000/start/start_game/${player_name}/${difficulty}`);
             const start_game_json = await start_game.json();
-            console.log(start_game_json);
             start_modal.style.display = 'none';
             await update_stats();
             await button_to_airport();

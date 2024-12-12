@@ -12,15 +12,13 @@ ending_modal.style.padding = 0;
 async function leaderboard() {
     const response = await fetch('http://127.0.0.1:4000/sql/leaderboard');
     const data = await response.json();
-    console.log(data);
     return data;
 }
 
 async function ending(end) {
     if (end == 'good_pill') {
-        console.log('good pill ending');
-        ending_type_text.textContent = 'You got the Good Pill ending';
-        ending_text.textContent = 'You have chosen the good pill, you live happy';
+        ending_type_text.textContent = 'You got the Good Pill ending!';
+        ending_text.textContent = 'You have chosen the good pill, you live happy!';
     } else if (end == 'bad_pill') {
         console.log('bad pill ending');
         ending_type_text.textContent = 'You got the Bad Pill ending';
@@ -29,6 +27,24 @@ async function ending(end) {
         console.log('You have chosen the neutral pill, you are in the middle');
 
         ending_text.textContent = 'You have chosen the neutral pill, you are in the middle';
+        ending_type_text.textContent = 'You got the Bad Pill ending!';
+        ending_text.textContent = 'You have chosen the bad pill, you are jail!';
+    } else if (end == 'bad_shark') {
+        ending_type_text.textContent = 'You got the Bad Shark ending!'
+        ending_text.textContent = 'You got caught by the shark and are unable to pay him back!'
+    } else if (end == 'good_shark') {
+        ending_type_text.textContent = 'You got the Bad Shark ending!'
+        ending_text.textContent = 'You got caught by the shark but you are able to pay him back!'
+    }
+    
+    
+    
+    
+    
+    
+    else {
+
+        ending_text.textContent = 'I dont know how you ended up here, but i guess enjoy your life then.';
     }
 
 
