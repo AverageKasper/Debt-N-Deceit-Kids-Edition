@@ -118,14 +118,6 @@ async function medium_tasks() {
         await shark_moving(player_name_input.value, -1);
     });
 
-    // const medium_button_2 = document.createElement('button')
-    // medium_button_2.textContent = 'Lollipop'
-    // medium_button_2.className = 'button'
-    // medium_button_2.addEventListener('click', async (evt) => {   
-    //     await shark_moving(player_name_input.value, -1);
-    //     return;
-    // });
-
     const medium_button_2 = document.createElement('button')
     medium_button_2.textContent = 'Go to the next airport'
     medium_button_2.className = 'button'
