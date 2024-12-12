@@ -85,7 +85,7 @@ The Shark is slowed {shark} airports down by this.
     # Russian roulette, The Shark calls you and offers to play a game. Ends game if russian roulette is played
     elif "morpheus" == event_check:
         text_result = """You receive a mysterious message from an unknown number.
-        The message reads: "I offer you a choice.Take a pill to end your journey
+        The message reads: "I offer you a choice. Take a pill to end your journey
         or continue to see how far you can run."
         What do you do?"""
         event_list.remove("morpheus")

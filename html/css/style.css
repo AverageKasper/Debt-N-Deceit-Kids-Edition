@@ -140,7 +140,6 @@ body {
 .stat-block p {
   margin: 0;
   padding: 0;
-  
   border-radius: 10px;
 
 }
@@ -323,7 +322,7 @@ td {
   overflow: hidden;
 }
 .gambling-game-content{
-  background-color: aqua;
+  background-color: rgb(20, 100, 147);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -380,17 +379,30 @@ td {
   left: 0;
   width: 80px;  /* Width of the vertical ad */
   height: 100vh;  /* Full height of the viewport */
-  background-color: #f1f1f1;  /* Fallback background color */
+  background-color: #000000;  /* Fallback background color */
   display: flex;
   flex-direction: column;  /* Stack ads vertically */
   justify-content: space-between;  /* Space out the two ads */
   z-index: 3;  /* Ensures it stays on top of the main content */
 }
 
-
+.action_question {
+  display: flex;
+  flex-direction: column;
+  background-color: rgb(49,49, 49);
+  border-radius: 10px; 
+  padding: 10px;
+  box-sizing: content-box;
+  color: rgb(88, 81, 81);
+}
+.action_question h3 {
+  margin: 0;
+  padding: 0;
+  border-radius: 10px; 
+}
 
 .ad-left .ad {
-  width: 150%;  /* Full width of the container */
+  width: 110%;  /* Full width of the container */
   height: 50%;  /* Each ad takes about 48% of the height, 4% total space for margin */
   background-color: black;  /* Optional background for visibility */
   display: flex;
@@ -407,19 +419,19 @@ td {
 /* Right Ad */
 .ad-right {
   position: fixed;
-  top: ;
+  top: 0;
   right: 0;
   width: 80px;  /* Width of the vertical ad */
   height: 100vh;  /* Full height of the viewport */
-  background-color: #f1f1f1;  /* Fallback background color */
+  background-color: #000000;  /* Fallback background color */
   display: flex;
   flex-direction: column;  /* Stack ads vertically */
   justify-content: space-between;  /* Space out the two ads */
-  z-index: 9999;  /* Ensures it stays on top of the main content */
+  z-index: 3;  /* Ensures it stays on top of the main content */
 }
 
 .ad-right .ad {
-  width: 100%;  /* Full width of the container */
+  width: 110%;  /* Full width of the container */
   height: 50%;  /* Each ad takes about 48% of the height, 4% total space for margin */
   background-color: black;  /* Optional background for visibility */
   display: flex;
