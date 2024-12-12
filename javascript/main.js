@@ -152,14 +152,14 @@ async function large_tasks() {
         gambling_modal.style.display = 'block';
     });
 
-    const large_button_2 = document.createElement('button')
-    large_button_2.textContent = 'Lollipop'
-    large_button_2.className = 'button'
-    large_button_2.addEventListener('click', async (evt) => {
+    // const large_button_2 = document.createElement('button')
+    // large_button_2.textContent = 'Lollipop'
+    // large_button_2.className = 'button'
+    // large_button_2.addEventListener('click', async (evt) => {
         
-        await shark_moving(player_name_input.value, -1);
-        return;
-    });
+    //     await shark_moving(player_name_input.value, -1);
+    //     return;
+    // });
 
     const large_button_3 = document.createElement('button')
     large_button_3.textContent = 'Go to the next airport'
@@ -170,7 +170,7 @@ async function large_tasks() {
     });
     
     main_buttons_div.appendChild(large_button_1)
-    main_buttons_div.appendChild(large_button_2)
+    // main_buttons_div.appendChild(large_button_2)
     main_buttons_div.appendChild(large_button_3)
 }
 

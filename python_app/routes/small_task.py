@@ -112,7 +112,7 @@ def dumpster_dive():
         text_result = f"You found a voucher for CP from the trash! You got {carbon}CP!"
         
     elif find > 95 and find <= 100: ## Phallic object will save your ass
-        text_result = f"\nYou found 1 phallic object from the trash! It smells wierd."
+        text_result = f"\nYou found 1 magical item from the trash! It glows faintly."
         inventory += 1
     
     # Check what reward was got and update class stats accordingly
