@@ -24,7 +24,7 @@ async function ending(end) {
     } else if (end == 'bad_pill') {
         console.log('bad pill ending');
         ending_type_text.textContent = 'You got the Bad Pill ending';
-        ending_text.textContent = 'You have chosen the bad pill, you are jail';
+        ending_text.textContent = 'You have chosen the bad pill, you have "explosive diarrhea" and and your journey ends in jail';
     } else {
         console.log('You have chosen the neutral pill, you are in the middle');
 
