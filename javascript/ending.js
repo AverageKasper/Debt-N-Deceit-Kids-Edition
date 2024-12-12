@@ -1,6 +1,6 @@
 'use strict';
 
-const ending_modal = document.getElementById('ending_modal');   
+const ending_modal = document.getElementById('ending_modal');
 const ending_type_text = document.getElementById("end_type");
 const ending_text = document.getElementById('ending_text')
 const open_leaderboard = document.getElementById('open_leaderboard');
@@ -20,33 +20,20 @@ async function ending(end) {
         ending_type_text.textContent = 'You got the Good Pill ending!';
         ending_text.textContent = 'You have chosen the good pill, you live happy!';
     } else if (end == 'bad_pill') {
-        console.log('bad pill ending');
-        ending_type_text.textContent = 'You got the Bad Pill ending';
-        ending_text.textContent = 'You have chosen the bad pill, you have "explosive diarrhea" and and your journey ends in jail';
-    } else {
-        console.log('You have chosen the neutral pill, you are in the middle');
-
-        ending_text.textContent = 'You have chosen the neutral pill, you are in the middle';
         ending_type_text.textContent = 'You got the Bad Pill ending!';
-        ending_text.textContent = 'You have chosen the bad pill, you are jail!';
+        ending_text.textContent = 'You have chosen the bad pill, you have "explosive diarrhea" and and your journey ends in jail';
     } else if (end == 'bad_shark') {
         ending_type_text.textContent = 'You got the Bad Shark ending!'
         ending_text.textContent = 'You got caught by the shark and are unable to pay him back!'
     } else if (end == 'good_shark') {
         ending_type_text.textContent = 'You got the Bad Shark ending!'
         ending_text.textContent = 'You got caught by the shark but you are able to pay him back!'
-    }
-    
-    
-    
-    
-    
-    
-    else {
-
+    } else {
+        ending_type_text.textContent = 'You got the ??? ending!'
         ending_text.textContent = 'I dont know how you ended up here, but i guess enjoy your life then.';
     }
-
+    
+    
 
     const leaderboard_data = await leaderboard();
     for (let i = 0; i < leaderboard_data.length; i++) {
